@@ -12,13 +12,20 @@ global Epic := "Hyperspace"
 Activate_Send_Return(window,message)
 {
     current := WinActive("A")
+    
+    if window==current
+    {
+        Send(message)
+    }
+    else
+    {
+        WinActivate(window)
+        Sleep -1 ;Make sure keystrokes are done
+        Send(message)
+        Sleep -1 ;Make sure keystrokes are done
+        WinActivate(current)
+    }
 
-    WinActivate(window)
-    Sleep -1 ;Make sure keystrokes are done
-    Send(message)
-    Sleep -1 ;Make sure keystrokes are done
-
-    WinActivate(current)
     Return
 }
 
