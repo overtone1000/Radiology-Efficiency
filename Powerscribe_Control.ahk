@@ -5,7 +5,9 @@
     + is Shift
     Send("{Blind}^") could be used to reactivate ctrl down (so it doesn't need to be pushed again)
     
-    Mapping to Ctrl & a instead of ^a will allow chaining multiple commands together with ctrl held. If using ^a, the Ctrl will be undone with any "Send" commands.
+    Mapping to Ctrl & a instead of ^a will allow chaining multiple commands together with ctrl held.
+    If using ^a, the Ctrl will be undone with any "Send" commands.
+    But, this disables the native command! In this case, selecting all with Ctrl+A will never work
 */
 
 global PowerScribe := "PowerScribe"
@@ -174,12 +176,12 @@ ToggleVisibility(window)
     
 }
 
-Ctrl & a::
+Ctrl & d::
 {
     Activate_Send_Return(PowerScribe, "+{Tab}")
 }
 
-Ctrl & d::
+Ctrl & f::
 {
     Activate_Send_Return(PowerScribe, "{Tab}")
 }
