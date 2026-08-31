@@ -113,11 +113,18 @@ ToggleVisibility(window,maximize)
 ; . Del
 ^+.::
 {
-    WinActivate(Powerscribe)
-    Send("^a")
-    Send("^v")
-    Sleep(1000)
-    Send("{F12}") ; sign report
+    if A_Clipboard == ""
+    {
+        MsgBox("Clipboard is empty!")
+    }
+    else
+    {
+        WinActivate(Powerscribe)
+        Send("^a")
+        Send("^v")
+        Sleep(1000)
+        Send("{F12}") ; sign report
+    }
 }
 
 ; 1
