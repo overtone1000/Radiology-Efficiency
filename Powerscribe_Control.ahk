@@ -9,12 +9,38 @@
 global PowerScribe := "PowerScribe"
 global Epic := "Hyperspace"
 
-ActivateAndSend(window,message)
+Activate_Send_Return(window,message)
 {
+    current := WinActive("A")
+
     WinActivate(window)
-    Sleep 1 ;Make sure keystrokes are done
+    Sleep -1 ;Make sure keystrokes are done
     Send(message)
+    Sleep -1 ;Make sure keystrokes are done
+
+    WinActivate(current)
     Return
+}
+
+BackgroundSend(window,message)
+{
+    hWnd := WinExist(window)
+    if hWnd
+    {
+        SetKeyDelay (10, 50) ; 10ms between keys, 50ms press duration
+
+        ;F1::ControlSend, ahk_parent, {F4}, ahk_exe Nuance.PowerScribe360.exe
+
+        ;MsgBox("ahk_id " . hWnd)
+        ;ControlSend(message,  "ahk_id " . hWnd) ;This doesn't work
+        ;ControlSend(message, hWnd) ;This doesn't work
+        ;ControlSend(message, "ahk_parent", "ahk_exe Nuance.PowerScribe360.exe") ;This doesn't work
+        ;PostMessage(WM_CHAR, , 0, hWnd)
+    }
+    else
+    {
+        MsgBox("Couldn't find window.")
+    }
 }
 
 ToggleVisibility(window)
@@ -73,19 +99,19 @@ ToggleVisibility(window)
 ; 4
 ^+4::
 {
-    ActivateAndSend(PowerScribe, "+{Tab}")
+    Activate_Send_Return(PowerScribe, "+{Tab}")
 }
 
 ; 5
 ^+5::
 {
-    ActivateAndSend(PowerScribe, "{F4}")
+    Activate_Send_Return(PowerScribe, "{F4}")
 }
 
 ; 6
 ^+6::
 {
-    ActivateAndSend(PowerScribe, "{Tab}")
+    Activate_Send_Return(PowerScribe, "{Tab}")
 }
 
 ; 7
@@ -133,27 +159,12 @@ ToggleVisibility(window)
 ; Enter
 ^+Enter::
 {
-    ActivateAndSend(PowerScribe, "{F4}")
+    Activate_Send_Return(PowerScribe, "{F4}")
 }
 
 ^Space::
 {
-    ActivateAndSend(PowerScribe, "{F4}")
-}
-
-^4::
-{
-    /*
-        Pushes powerscribe window down if it's active.
-        Resends Ctrl (^) since sending the down input undoes it.
-    */
-    if WinActive("PowerScribe")
-    {
-        Send("#{Down}")
-        Send("#{Down}")
-        Send("{Blind}^")   
-    }
-    Return
+    Activate_Send_Return(PowerScribe, "{F4}")
 }
 
 ^e::
