@@ -38,6 +38,21 @@ ToggleVisibility(window)
 ; 0
 ^+0::
 {
+    Send("^a")
+    Send("^x")
+}
+
+; 00
+^+;::
+{
+    ToggleVisibility(Powerscribe)
+}
+
+; . Del
+^+.::
+{
+    Send("^a")
+    Send("^v")
 }
 
 ; 1
@@ -81,15 +96,11 @@ ToggleVisibility(window)
 ; 8, still mapped to * for some reason
 ^+8::
 {
+    Send("8 pressed.")
 }
 
 ; 9
 ^+9::
-{
-}
-
-; . Del
-^+.::
 {
 }
 
@@ -117,10 +128,7 @@ ToggleVisibility(window)
 {
 }
 
-; 00
-^+;::
-{
-}
+
 
 ; Enter
 ^+Enter::
