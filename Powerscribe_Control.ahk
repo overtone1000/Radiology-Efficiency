@@ -11,6 +11,8 @@ global Epic := "Hyperspace"
 
 Activate_Send_Return(window,message)
 {
+    SetKeyDelay (10, 50) ; 10ms between keys, 50ms press duration, hopefully more reliable
+
     current := WinActive("A")
     
     if window==current
@@ -20,9 +22,9 @@ Activate_Send_Return(window,message)
     else
     {
         WinActivate(window)
-        Sleep -1 ;Make sure keystrokes are done
+        Sleep 10 ;Make sure activation has happened
         Send(message)
-        Sleep -1 ;Make sure keystrokes are done
+        Sleep 10 ;Make sure keystrokes are done
         WinActivate(current)
     }
 
