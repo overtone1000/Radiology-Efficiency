@@ -12,6 +12,7 @@
 
 global PowerScribe := "PowerScribe"
 global Epic := "Hyperspace"
+global RadCalc := "RadCalc"
 
 Activate_Send_Return(window,message)
 {
@@ -56,6 +57,12 @@ BackgroundSend(window,message)
     }
 }
 
+SendActiveWindowDown()
+{
+    Send("#{Down}")
+    Send("#{Down}")
+}
+
 ToggleVisibility(window,maximize)
 {
     /*
@@ -64,8 +71,7 @@ ToggleVisibility(window,maximize)
     */
     if WinActive(window)
     {
-        Send("#{Down}")
-        Send("#{Down}")   
+         SendActiveWindowDown()
     }
     else
     {
@@ -78,11 +84,22 @@ ToggleVisibility(window,maximize)
     Return
 }
 
-; 0
+; 0 - Copy everything from powerscribe into browser
 ^+0::
 {
+    WinActivate(Powerscribe)
     Send("^a")
+    Sleep(100)
     Send("^x")
+    Sleep(100)
+    SendActiveWindowDown()
+    Sleep(200)
+    hWnd := WinExist(RadCalc)
+    ;MsgBox(hWnd)
+    WinActivate(hWnd)
+    Sleep(200)
+    CoordMode("Mouse", "Client")
+    Click("543 128")
 }
 
 ; 00
@@ -94,8 +111,10 @@ ToggleVisibility(window,maximize)
 ; . Del
 ^+.::
 {
+    WinActivate(Powerscribe)
     Send("^a")
     Send("^v")
+    Send("{F12}") ; sign report
 }
 
 ; 1
