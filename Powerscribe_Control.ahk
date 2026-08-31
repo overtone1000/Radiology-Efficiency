@@ -119,12 +119,19 @@ ToggleVisibility(window,maximize)
     }
     else
     {
-        WinActivate(Powerscribe)
-        Send("^a")
-        Send("^v")
-        Send("^{Home}")
-        Sleep(1000)
-        Send("{F12}") ; sign report
+        if WinExist(RadCalc)
+        {
+            WinActivate(Powerscribe)
+            Send("^a")
+            Send("^v")
+            Send("^{Home}")
+            Sleep(1000)
+            Send("{F12}") ; sign report
+        }
+        else
+        {
+            MsgBox("No RadCalc Window")
+        }
     }
 }
 
