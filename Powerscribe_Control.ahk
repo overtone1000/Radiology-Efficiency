@@ -100,6 +100,8 @@ ToggleVisibility(window,maximize)
     Sleep(200)
     CoordMode("Mouse", "Client")
     Click("543 128")
+    Sleep(100)
+    A_Clipboard := "" ; Clear the clipboard to avoid problems!
 }
 
 ; 00
@@ -114,6 +116,7 @@ ToggleVisibility(window,maximize)
     WinActivate(Powerscribe)
     Send("^a")
     Send("^v")
+    Sleep()
     Send("{F12}") ; sign report
 }
 
