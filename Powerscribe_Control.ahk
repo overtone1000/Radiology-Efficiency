@@ -171,6 +171,16 @@ ToggleVisibility(window)
     Activate_Send_Return(PowerScribe, "{F4}")
 }
 
+^a::
+{
+    Activate_Send_Return(PowerScribe, "+{Tab}")
+}
+
+^d::
+{
+    Activate_Send_Return(PowerScribe, "{Tab}")
+}
+
 ^Space::
 {
     Activate_Send_Return(PowerScribe, "{F4}")
