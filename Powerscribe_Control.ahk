@@ -116,7 +116,7 @@ ToggleVisibility(window,maximize)
     WinActivate(Powerscribe)
     Send("^a")
     Send("^v")
-    Sleep()
+    Sleep(1000)
     Send("{F12}") ; sign report
 }
 
