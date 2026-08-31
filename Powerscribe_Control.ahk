@@ -56,7 +56,7 @@ BackgroundSend(window,message)
     }
 }
 
-ToggleVisibility(window)
+ToggleVisibility(window,maximize)
 {
     /*
         Pushes window down if it's active.
@@ -70,6 +70,10 @@ ToggleVisibility(window)
     else
     {
         WinActivate(window)
+        if maximize
+        {
+            WinMaximize(window)
+        }
     }
     Return
 }
@@ -84,7 +88,7 @@ ToggleVisibility(window)
 ; 00
 ^+;::
 {
-    ToggleVisibility(Powerscribe)
+    ToggleVisibility(Powerscribe, true)
 }
 
 ; . Del
@@ -194,5 +198,5 @@ Ctrl & Space::
 
 Ctrl & e::
 {
-    ToggleVisibility("Hyperspace")
+    ToggleVisibility("Hyperspace",false)
 }
