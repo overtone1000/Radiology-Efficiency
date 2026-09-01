@@ -174,6 +174,7 @@ ToggleVisibility(window,maximize)
 ; 7
 ^+7::
 {
+    Activate_Send_Return(PowerScribe, "{Backspace}")
 }
 
 ; 8, still mapped to * for some reason
@@ -185,6 +186,7 @@ ToggleVisibility(window,maximize)
 ; 9
 ^+9::
 {
+    Activate_Send_Return(PowerScribe, "{Delete}")
 }
 
 ; *
