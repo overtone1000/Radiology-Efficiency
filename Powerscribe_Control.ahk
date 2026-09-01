@@ -16,7 +16,7 @@ global RadCalc := "RadCalc"
 
 Activate_Send_Return(window,message)
 {
-    SetKeyDelay (10, 50) ; 10ms between keys, 50ms press duration, hopefully more reliable
+    SetKeyDelay (10, 30) ; 10ms between keys, 50ms press duration, hopefully more reliable
 
     current := WinActive("A")
     
@@ -27,9 +27,9 @@ Activate_Send_Return(window,message)
     else
     {
         WinActivate(window)
-        Sleep 10 ;Make sure activation has happened
+        ; Sleep 10 ;Make sure activation has happened
         Send(message)
-        Sleep 10 ;Make sure keystrokes are done
+        ; Sleep 10 ;Make sure keystrokes are done
         WinActivate(current)
     }
 
@@ -41,7 +41,7 @@ BackgroundSend(window,message)
     hWnd := WinExist(window)
     if hWnd
     {
-        SetKeyDelay (10, 50) ; 10ms between keys, 50ms press duration
+        SetKeyDelay (10, 30) ; 10ms between keys, 50ms press duration
 
         ;F1::ControlSend, ahk_parent, {F4}, ahk_exe Nuance.PowerScribe360.exe
 
