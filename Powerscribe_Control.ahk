@@ -217,20 +217,21 @@ ToggleVisibility(window,maximize)
     
 }
 
-Ctrl & d::
+Alt & v::
 {
     Activate_Send_Return(PowerScribe, "+{Tab}")
 }
 
-Ctrl & f::
-{
-    Activate_Send_Return(PowerScribe, "{Tab}")
-}
 
-Ctrl & Space::
+Alt & b::
 {
     Activate_Send_Return(PowerScribe, "{F4}")
     
+}
+
+Alt & n::
+{
+    Activate_Send_Return(PowerScribe, "{Tab}")
 }
 
 Ctrl & e::
