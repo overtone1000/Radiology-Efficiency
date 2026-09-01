@@ -14,7 +14,7 @@ global PowerScribe := "PowerScribe"
 global Epic := "Hyperspace"
 global RadCalc := "RadCalc"
 
-Activate_Send_Return(window,message)
+Activate_Send_Return(window,message,delay)
 {
     SetKeyDelay (10, 30) ; 10ms between keys, 50ms press duration, hopefully more reliable
 
@@ -27,9 +27,8 @@ Activate_Send_Return(window,message)
     else
     {
         WinActivate(window)
-        ; Sleep 10 ;Make sure activation has happened
+        Sleep delay ;Make sure activation has happened, definitely needed for dictation toggle
         Send(message)
-        ; Sleep 10 ;Make sure keystrokes are done
         WinActivate(current)
     }
 
@@ -153,19 +152,19 @@ ToggleVisibility(window,maximize)
 ; 4
 ^+4::
 {
-    Activate_Send_Return(PowerScribe, "+{Tab}")
+    Activate_Send_Return(PowerScribe, "+{Tab}", -1)
 }
 
 ; 5
 ^+5::
 {
-    Activate_Send_Return(PowerScribe, "{F4}")
+    Activate_Send_Return(PowerScribe, "{F4}", -1)
 }
 
 ; 6
 ^+6::
 {
-    Activate_Send_Return(PowerScribe, "{Tab}")
+    Activate_Send_Return(PowerScribe, "{Tab}", 10)
 }
 
 ; 7
@@ -213,25 +212,25 @@ ToggleVisibility(window,maximize)
 ; Enter
 ^+Enter::
 {
-    Activate_Send_Return(PowerScribe, "{F4}")
+    Activate_Send_Return(PowerScribe, "{F4}", 10)
     
 }
 
 Alt & v::
 {
-    Activate_Send_Return(PowerScribe, "+{Tab}")
+    Activate_Send_Return(PowerScribe, "+{Tab}", -1)
 }
 
 
 Alt & b::
 {
-    Activate_Send_Return(PowerScribe, "{F4}")
+    Activate_Send_Return(PowerScribe, "{F4}", 10)
     
 }
 
 Alt & n::
 {
-    Activate_Send_Return(PowerScribe, "{Tab}")
+    Activate_Send_Return(PowerScribe, "{Tab}", -1)
 }
 
 Ctrl & e::
