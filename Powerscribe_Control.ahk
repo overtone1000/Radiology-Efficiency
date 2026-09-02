@@ -94,9 +94,9 @@ ToggleVisibility(window,maximize)
 {
     WinActivate(Powerscribe)
     Send("^a")
-    Sleep(100)
+    Sleep(200) ; Make sure selection happens
     Send("^x")
-    Sleep(100)
+    Sleep(200) ; Make sure full cut happens
     WinMinimize(Powerscribe)
     Sleep(200)
     
