@@ -97,9 +97,7 @@ ToggleVisibility(window,maximize)
     Sleep(100)
     SendActiveWindowDown()
     Sleep(200)
-    hWnd := WinExist(RadCalc)
-    ;MsgBox(hWnd)
-    WinActivate(hWnd)
+    WinActivate(RadCalc)
     Sleep(200)
     CoordMode("Mouse", "Client")
     Click("543 128")
@@ -211,6 +209,7 @@ ToggleVisibility(window,maximize)
 ; Numlock
 ^+'::
 {
+        WinActivate(RadCalc)
 }
 
 
