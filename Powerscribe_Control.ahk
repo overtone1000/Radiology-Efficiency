@@ -60,6 +60,7 @@ BackgroundSend(window,message)
     }
 }
 
+ ;maybe phase this out, doesn't work as reliably as WinMinimize
 SendActiveWindowDown()
 {
     Send("#{Down}")
@@ -74,7 +75,8 @@ ToggleVisibility(window,maximize)
     */
     if WinActive(window)
     {
-         SendActiveWindowDown()
+         ;SendActiveWindowDown() ;maybe phase this out, doesn't work as reliably as WinMinimize
+         WinMinimize(window)
     }
     else
     {
@@ -95,14 +97,23 @@ ToggleVisibility(window,maximize)
     Sleep(100)
     Send("^x")
     Sleep(100)
-    SendActiveWindowDown()
+    WinMinimize(Powerscribe)
     Sleep(200)
+    
     WinActivate(RadCalc)
-    Sleep(200)
-    CoordMode("Mouse", "Client")
-    Click("543 128")
-    Sleep(100)
-    A_Clipboard := "" ; Clear the clipboard to avoid problems!
+    
+    while((A_Index < 300) && NOT WinActive(RadCalc))
+    {
+        Sleep(10)
+    }
+
+    if WinActive(RadCalc)
+    {
+        CoordMode("Mouse", "Client")
+        Click("543 128")
+        Sleep(100)
+        A_Clipboard := "" ; Clear the clipboard to avoid problems!
+    }
 }
 
 ; 00
