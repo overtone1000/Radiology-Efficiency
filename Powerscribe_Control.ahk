@@ -133,12 +133,19 @@ ToggleVisibility(window,maximize)
     {
         if WinExist(RadCalc)
         {
-            WinActivate(Powerscribe)
-            Send("^a")
-            Send("^v")
-            Send("^{Home}")
-            Sleep(1000)
-            Send("{F12}") ; sign report
+            if WinActive(RadCalc)
+            {
+                WinActivate(Powerscribe)
+                Send("^a")
+                Send("^v")
+                Send("^{Home}")
+                Sleep(1000)
+                Send("{F12}") ; sign report
+            }
+            else
+            {
+                MsgBox("RadCalc is not the active window. Aborting for safety.")
+            }
         }
         else
         {
