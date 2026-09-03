@@ -13,22 +13,24 @@
 global PowerScribe := "PowerScribe"
 global Epic := "Hyperspace"
 global RadCalc := "RadCalc"
+global Intellispace := "Philips IntelliSpace Portal"
+global radcalc_ingest_button := "543 128"
+global max_button := "46 1064"
 
-Activate_Send_Return(window,message,delay:="")
+
+Activate_Run_Return(window,bound_function,delay:="")
 {
-    SetKeyDelay (10, 30) ; 10ms between keys, 50ms press duration, hopefully more reliable
-
     current := WinActive("A")
     
     if window==current
     {
-        Send(message)
+        bound_function()
     }
     else
     {
         WinActivate(window)
         ; Sleep delay ; Not needed
-        Send(message)
+        bound_function()
         if delay
         {
             Sleep delay ; Definitely needed for dictation toggle!
@@ -37,6 +39,36 @@ Activate_Send_Return(window,message,delay:="")
     }
 
     Return
+}
+
+Activate_Send_Return(window,message,delay:="")
+{
+    SetKeyDelay (10, 30) ; 10ms between keys, 50ms press duration, hopefully more reliable
+    bound_send(){
+        Send(message)
+    }
+    Activate_Run_Return(window,bound_send,delay)
+}
+
+Activate_Click_Return(window,coords,delay:="",return_to_original_position:=false)
+{
+    x:=""
+    y:=""
+    if(return_to_original_position)
+    {
+        CoordMode("Mouse", "Screen")
+        MouseGetPos(&x,&y)
+    }
+    bound_click(){
+        CoordMode("Mouse", "Client")
+        Click(coords)
+    }
+    Activate_Run_Return(window,bound_click,delay)
+    if(return_to_original_position)
+    {
+        CoordMode("Mouse", "Screen")
+        MouseMove(x,y,0)
+    }
 }
 
 BackgroundSend(window,message)
@@ -110,7 +142,7 @@ ToggleVisibility(window,maximize)
     if WinActive(RadCalc)
     {
         CoordMode("Mouse", "Client")
-        Click("543 128")
+        Click(radcalc_ingest_button)
         Sleep(100)
         A_Clipboard := "" ; Clear the clipboard to avoid problems!
     }
@@ -221,13 +253,13 @@ ToggleVisibility(window,maximize)
 }
 
 ^+/::
-{
+{   
 }
 
 ; Numlock
 ^+'::
 {
-        WinActivate(RadCalc)
+    Activate_Click_Return(Intellispace, max_button, 10, true)
 }
 
 
