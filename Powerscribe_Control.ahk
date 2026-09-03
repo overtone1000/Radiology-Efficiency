@@ -245,7 +245,7 @@ ToggleVisibility(window,maximize)
     Activate_Send_Return(PowerScribe, "{Delete}")
 }
 
-; *
+; mapped to ,
 ^+,::
 {
 }
@@ -253,15 +253,33 @@ ToggleVisibility(window,maximize)
 ; -
 ^+-::
 {
+    tabs:="SysTabControl321"
+    list:="SysListView321"
+    window:="Sound"
+    Run("control.exe mmsys.cpl,,1") ; opens to recording tab
+    ;WinWait (window) ; Wait until it's open
+    ;WinActivate(window)
+    ;WinWaitActive(window)
+    ;result:=ListViewGetContent("",list,window) ;
+    ;MsgBox(result)
+    ;ControlFocus(list, window)
+    ;ControlSend("Rode Microphone",list,window)
+
+    ; Doesn't quite work.
+
+    Return
 }
 
-; mapped to ,
+; Still 8! Why?
 ^+*::
 {
+    MsgBox("Asterisk") 
 }
 
+; Not working with slash...
 ^+/::
-{   
+{
+    MsgBox("Slash") ; Not responding
 }
 
 ; Numlock
