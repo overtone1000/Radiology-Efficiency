@@ -212,11 +212,13 @@ ToggleVisibility(window,maximize)
 {
     bound_function()
     {
+        Sleep(300)
         Send("{Tab}")
-        Sleep(-1)
+        Sleep(500)
         Send("+{Tab}")
     }
-    Activate_Run_Return(Powerscribe,bound_function,10)
+    ;Activate_Run_Return(Powerscribe,bound_function,10)
+    ;This is working poorly when dictation is on.
 }
 
 ; 6
