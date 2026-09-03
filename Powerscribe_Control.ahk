@@ -210,7 +210,13 @@ ToggleVisibility(window,maximize)
 ; 5
 ^+5::
 {
-    Activate_Send_Return(PowerScribe, "{F4}", 10)
+    bound_function()
+    {
+        Send("{Tab}")
+        Sleep(-1)
+        Send("+{Tab}")
+    }
+    Activate_Run_Return(Powerscribe,bound_function,10)
 }
 
 ; 6
