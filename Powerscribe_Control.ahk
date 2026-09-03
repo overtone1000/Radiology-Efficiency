@@ -204,7 +204,7 @@ ToggleVisibility(window,maximize)
 ; 4
 ^+4::
 {
-    Activate_Send_Return(PowerScribe, "+{Tab}")
+    PowerscribePreviousField()
 }
 
 ; 5
@@ -224,7 +224,7 @@ ToggleVisibility(window,maximize)
 ; 6
 ^+6::
 {
-    Activate_Send_Return(PowerScribe, "{Tab}")
+    PowerscribeNextField()
 }
 
 ; 7
@@ -289,32 +289,44 @@ ToggleVisibility(window,maximize)
 }
 
 
+PowerscribeToggleDictation()
+{
+    Activate_Send_Return(PowerScribe, "{F4}", 30)
+}
+
+PowerscribePreviousField()
+{
+    Activate_Send_Return(PowerScribe, "+{Tab}")
+}
+
+PowerscribeNextField()
+{
+    Activate_Send_Return(PowerScribe, "{Tab}")
+}
 
 ; Enter
 ^+Enter::
 {
-    Activate_Send_Return(PowerScribe, "{F4}", 10)
-    
+    PowerscribeToggleDictation()
 }
 
 Alt & v::
 {
-    Activate_Send_Return(PowerScribe, "+{Tab}")
+    PowerscribePreviousField()
 }
 
 
 Alt & b::
 {
-    Activate_Send_Return(PowerScribe, "{F4}", 10)
-    
+    PowerscribeToggleDictation()
 }
 
 Alt & n::
 {
-    Activate_Send_Return(PowerScribe, "{Tab}")
+    PowerscribeNextField()
 }
 
 Ctrl & e::
 {
-    ToggleVisibility("Hyperspace",false)
+    ToggleVisibility(Epic,false)
 }
