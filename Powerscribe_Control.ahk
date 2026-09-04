@@ -285,6 +285,7 @@ ToggleVisibility(window,maximize)
     ;Sleep(-1)
     Send("^c")
     Sleep(100) ;Takes time for clipboard to populate
+    Click(bottom[1],bottom[2])
     
     weight_regex:="\((.*?)kg\)"
     height_regex:="\((.*?)m\)"
@@ -308,30 +309,36 @@ ToggleVisibility(window,maximize)
     is_male:=male_index>0
     is_female:=female_index>0
 
+    weight_in_kg:=""
+    height_in_m:=""
+    age:=""
+
     if(weight_index==0)
     {
         MsgBox("Couldn't get weight.")
-        Return
     }
-    else if(height_index==0)
+    else
+    {
+        weight_in_kg:=weight_result[1]
+    }
+
+    if(height_index==0)
     {
         MsgBox("Couldn't get height.")
-        Return
     }
-    else if(age_index==0)
+    else
     {
-        MsgBox("Couldn't get age.")
-        Return
-    }
-    else if(is_male == is_female)
-    {
-        MsgBox("Couldn't determine sex.")
-        Return
+        height_in_m:=height_result[1]
     }
     
-    weight_in_kg:=weight_result[1]
-    height_in_m:=height_result[1]
-    age:=age_result[1]
+    if(age_index==0)
+    {
+        MsgBox("Couldn't get age.")
+    }
+    else
+    {
+        age:=age_result[1]
+    }
 
     WinActivate(Browser)
     WinWaitActive(Browser)
@@ -355,13 +362,20 @@ ToggleVisibility(window,maximize)
     enter_info(height_box,Round(height_in_m*100,1))
     enter_info(weight_box,weight_in_kg)
 
-    if(is_male)
+    if(is_male == is_female)
     {
-        Click(male_radio)
+        MsgBox("Couldn't determine sex.")
     }
-    else if(is_female)
+    else
     {
-        Click(female_radio)
+        if(is_male)
+        {
+            Click(male_radio)
+        }
+        else
+        {
+            Click(female_radio)
+        }
     }
 
     Click(empty)
