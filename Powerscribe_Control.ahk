@@ -250,8 +250,10 @@ ToggleVisibility(window,maximize)
     WinActivate(Epic)
     WinWaitActive(Epic)
     WinMove(x_half,top,x_half,bottom,Epic)
+    Sleep(20)
 
     CoordMode("Mouse", "Client")
+    SendMode("Event")
     
     ;This would search for vitals but wasn't reliable.
     ;Send("^{Space}")
@@ -266,25 +268,23 @@ ToggleVisibility(window,maximize)
     ;Click("312, 155")
     ;Sleep(200)
 
-    Sleep(100)
     bottom:=[150,1130]
     top:=[2,133]
     
-    SendMode("Event")
     MouseMove(bottom[1],bottom[2],0)
     Sleep(-1)
     Send("{LButton Down}")
-    Sleep(-1)
+    ;Sleep(-1)
     Send("{LButton Up}")
-    Sleep(-1)
+    ;Sleep(-1)
     Send("{LButton Down}")
-    Sleep(-1)
+    ;Sleep(-1)
     MouseMove(top[1],top[2],0)
     Sleep(-1)
     Send("{LButton Up}")
-    Sleep(-1)
+    ;Sleep(-1)
     Send("^c")
-    Sleep(100)
+    Sleep(100) ;Takes time for clipboard to populate
     
     weight_regex:="\((.*?)kg\)"
     height_regex:="\((.*?)m\)"
