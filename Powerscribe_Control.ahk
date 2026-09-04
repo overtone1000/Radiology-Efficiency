@@ -236,7 +236,24 @@ ToggleVisibility(window,maximize)
 ; 8, still mapped to * for some reason
 ^+*::
 {
-    MsgBox("8")
+    WinActivate(Epic)
+    WinWaitActive(Epic)
+    WinMove(0,0,,,Epic)
+    Send("#{Right}")
+    Send("^{Space}")
+    Sleep(100)
+    Send("Vitals")
+    Sleep(100)
+    Send("{Enter}")
+    Sleep(500)
+    CoordMode("Mouse", "Client")
+    Click("226, 254")
+    Sleep(500)
+    Click("312, 155")
+    Sleep(200)
+    weight_in_kg:=""
+    weight_index:=RegExMatch(A_Clipboard,"(Weight).*?(kg)",&weight_in_kg)
+    MsgBox(weight_in_kg)
 }
 
 ; 9
