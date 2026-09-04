@@ -236,24 +236,86 @@ ToggleVisibility(window,maximize)
 ; 8, still mapped to * for some reason
 ^+*::
 {
+    monitor_index:=0
+    MonitorGet(monitor_index, &left, &top, &right, &bottom)
+    x_half:=(left+right)/2
+    height:=(bottom-top)
+   
     WinActivate(Epic)
     WinWaitActive(Epic)
-    WinMove(0,0,,,Epic)
-    Send("#{Right}")
-    Send("^{Space}")
-    Sleep(100)
-    Send("Vitals")
-    Sleep(100)
-    Send("{Enter}")
-    Sleep(500)
+    WinMove(x_half,top,x_half,bottom,Epic)
+
     CoordMode("Mouse", "Client")
-    Click("226, 254")
-    Sleep(500)
-    Click("312, 155")
-    Sleep(200)
-    weight_in_kg:=""
-    weight_index:=RegExMatch(A_Clipboard,"(Weight).*?(kg)",&weight_in_kg)
+    
+    ;This would search for vitals but wasn't reliable.
+    ;Send("^{Space}")
+    ;Sleep(100)
+    ;Send("Vitals")
+    ;Sleep(100)
+    ;Send("{Enter}")
+    ;Sleep(500)
+    ;CoordMode("Mouse", "Client")
+    ;Click("226, 254")
+    ;Sleep(500)
+    ;Click("312, 155")
+    ;Sleep(200)
+
+    Sleep(100)
+    bottom:=[150,1130]
+    top:=[2,133]
+    
+    SendMode("Event")
+    MouseMove(bottom[1],bottom[2],1)
+    Send("{LButton Down}")
+    Sleep(-1)
+    Send("{LButton Up}")
+    Sleep(-1)
+    Send("{LButton Down}")
+    Sleep(-1)
+    MouseMove(top[1],top[2],1)
+    Send("{LButton Up}")
+    Sleep(-1)
+    Send("^c")
+    
+    weight_regex:="\((.*?)kg\)"
+    height_regex:="\((.*?)m\)"
+    female_regex:="Female"
+    male_regex:="Male"
+
+    weight_result:=""
+    height_result:=""
+
+    weight_index:=RegExMatch(A_Clipboard,weight_regex,&weight_result)
+    height_index:=RegExMatch(A_Clipboard,height_regex,&height_result)
+    male_index:=RegExMatch(A_Clipboard,male_regex)
+    female_index:=RegExMatch(A_Clipboard,female_regex)
+
+    is_male:=male_index>0
+    is_female:=female_index>0
+
+    if(weight_index==0)
+    {
+        MsgBox("Couldn't get weight.")
+        Return
+    }
+    else if(height_index==0)
+    {
+        MsgBox("Couldn't get height.")
+        Return
+    }
+    else if(is_male == is_female)
+    {
+        MsgBox("Couldn't determine sex.")
+        Return
+    }
+    
+    weight_in_kg:=weight_result[1]
+    height_in_m:=height_result[1]
+    
     MsgBox(weight_in_kg)
+    MsgBox(height_in_m)
+    MsgBox(is_male)
+    MsgBox(is_female)
 }
 
 ; 9
