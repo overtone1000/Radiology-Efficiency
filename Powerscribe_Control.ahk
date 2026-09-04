@@ -269,13 +269,14 @@ ToggleVisibility(window,maximize)
     ;Sleep(200)
 
     profile:=[58,87]
-    bottom:=[150,1130]
+    bottom:=[150,1105]
     top:=[2,133]
     
     Click(profile[1],profile[2])
     Sleep(500)
     MouseMove(bottom[1],bottom[2],0)
     Sleep(-1)
+    Send("{Wheeldown 10}")
     Send("{LButton Down}")
     ;Sleep(-1)
     Send("{LButton Up}")
