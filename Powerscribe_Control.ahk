@@ -14,6 +14,7 @@ global PowerScribe := "PowerScribe"
 global Epic := "Hyperspace"
 global RadCalc := "RadCalc"
 global Intellispace := "Philips IntelliSpace Portal"
+global Browser := "Edge"
 global radcalc_ingest_button := "543 128"
 global max_button := "46 1064"
 
@@ -241,6 +242,11 @@ ToggleVisibility(window,maximize)
     x_half:=(left+right)/2
     height:=(bottom-top)
    
+    Run("https://radcalc.overdesigned.org/AscendingAorticDiameter")
+    WinActivate(Browser)
+    WinWaitActive(Browser)
+    WinMove(0,top,x_half,bottom,Browser)
+    
     WinActivate(Epic)
     WinWaitActive(Epic)
     WinMove(x_half,top,x_half,bottom,Epic)
@@ -265,28 +271,34 @@ ToggleVisibility(window,maximize)
     top:=[2,133]
     
     SendMode("Event")
-    MouseMove(bottom[1],bottom[2],1)
+    MouseMove(bottom[1],bottom[2],0)
+    Sleep(-1)
     Send("{LButton Down}")
     Sleep(-1)
     Send("{LButton Up}")
     Sleep(-1)
     Send("{LButton Down}")
     Sleep(-1)
-    MouseMove(top[1],top[2],1)
+    MouseMove(top[1],top[2],0)
+    Sleep(-1)
     Send("{LButton Up}")
     Sleep(-1)
     Send("^c")
+    Sleep(100)
     
     weight_regex:="\((.*?)kg\)"
     height_regex:="\((.*?)m\)"
+    age_regex:=", (.*?) yrs,"
     female_regex:="Female"
     male_regex:="Male"
 
     weight_result:=""
     height_result:=""
+    age_result:=""
 
     weight_index:=RegExMatch(A_Clipboard,weight_regex,&weight_result)
     height_index:=RegExMatch(A_Clipboard,height_regex,&height_result)
+    age_index:=RegExMatch(A_Clipboard,age_regex,&age_result)
     male_index:=RegExMatch(A_Clipboard,male_regex)
     female_index:=RegExMatch(A_Clipboard,female_regex)
 
@@ -303,6 +315,11 @@ ToggleVisibility(window,maximize)
         MsgBox("Couldn't get height.")
         Return
     }
+    else if(age_index==0)
+    {
+        MsgBox("Couldn't get age.")
+        Return
+    }
     else if(is_male == is_female)
     {
         MsgBox("Couldn't determine sex.")
@@ -311,11 +328,40 @@ ToggleVisibility(window,maximize)
     
     weight_in_kg:=weight_result[1]
     height_in_m:=height_result[1]
-    
-    MsgBox(weight_in_kg)
-    MsgBox(height_in_m)
-    MsgBox(is_male)
-    MsgBox(is_female)
+    age:=age_result[1]
+
+    WinActivate(Browser)
+    WinWaitActive(Browser)
+    Send("^0")
+
+    age_box:="59, 421"
+    height_box:="76, 474"
+    weight_box:="151, 526"
+    male_radio:="17, 564"
+    female_radio:="18, 592"
+    empty:="167, 650"
+
+    enter_info(location, value)
+    {
+        Click(location)
+        Send(value)
+        Sleep(10)
+    }
+
+    enter_info(age_box,age)
+    enter_info(height_box,Round(height_in_m*100,1))
+    enter_info(weight_box,weight_in_kg)
+
+    if(is_male)
+    {
+        Click(male_radio)
+    }
+    else if(is_female)
+    {
+        Click(female_radio)
+    }
+
+    Click(empty)
 }
 
 ; 9
