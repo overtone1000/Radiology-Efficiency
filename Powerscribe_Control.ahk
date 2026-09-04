@@ -234,9 +234,9 @@ ToggleVisibility(window,maximize)
 }
 
 ; 8, still mapped to * for some reason
-^+8::
+^+*::
 {
-    Send("8 pressed.")
+    MsgBox("8")
 }
 
 ; 9
@@ -245,9 +245,16 @@ ToggleVisibility(window,maximize)
     Activate_Send_Return(PowerScribe, "{Delete}")
 }
 
-; mapped to ,
+; +
+^+=::
+{
+    MsgBox("+")
+}
+
+; * mapped to ,
 ^+,::
 {
+    MsgBox("*")
 }
 
 ; -
@@ -268,12 +275,6 @@ ToggleVisibility(window,maximize)
     ; Doesn't quite work.
 
     Return
-}
-
-; Still 8! Why?
-^+*::
-{
-    MsgBox("Asterisk") 
 }
 
 ; Not working with slash...
