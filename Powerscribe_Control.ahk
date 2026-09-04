@@ -250,7 +250,7 @@ ToggleVisibility(window,maximize)
     WinActivate(Epic)
     WinWaitActive(Epic)
     WinMove(x_half,top,x_half,bottom,Epic)
-    Sleep(100)
+    Sleep(200)
 
     CoordMode("Mouse", "Client")
     SendMode("Event")
@@ -273,7 +273,7 @@ ToggleVisibility(window,maximize)
     top:=[2,133]
     
     Click(profile[1],profile[2])
-    Sleep(500)
+    Sleep(1000)
     MouseMove(bottom[1],bottom[2],0)
     Sleep(-1)
     Send("{Wheeldown 10}")
