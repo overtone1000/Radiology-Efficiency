@@ -268,9 +268,12 @@ ToggleVisibility(window,maximize)
     ;Click("312, 155")
     ;Sleep(200)
 
+    profile:=[58,87]
     bottom:=[150,1130]
     top:=[2,133]
     
+    Click(profile[1],profile[2])
+    Sleep(500)
     MouseMove(bottom[1],bottom[2],0)
     Sleep(-1)
     Send("{LButton Down}")
@@ -358,9 +361,18 @@ ToggleVisibility(window,maximize)
         Sleep(10)
     }
 
-    enter_info(age_box,age)
-    enter_info(height_box,Round(height_in_m*100,1))
-    enter_info(weight_box,weight_in_kg)
+    if(age!=="")
+    {
+        enter_info(age_box,age)
+    }
+    if(height_in_m!=="")
+    {
+        enter_info(height_box,Round(height_in_m*100,1))
+    }
+    if(weight_in_kg!=="")
+    {
+        enter_info(weight_box,weight_in_kg)
+    }
 
     if(is_male == is_female)
     {
