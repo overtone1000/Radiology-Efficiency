@@ -302,6 +302,9 @@ ToggleVisibility(window,maximize)
     male_index:=RegExMatch(A_Clipboard,male_regex)
     female_index:=RegExMatch(A_Clipboard,female_regex)
 
+    ; Clear clipboard of identifying information
+    A_Clipboard:=""
+
     is_male:=male_index>0
     is_female:=female_index>0
 
