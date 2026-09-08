@@ -3,23 +3,18 @@
 #Include Constants.ahk
 #Include GenericWindowFunctions.ahk
 
-CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
-{
-        monitor_index:=0
-    MonitorGet(monitor_index, &left, &top, &right, &bottom)
-    x_half:=(left+right)/2
-    height:=(bottom-top)
-   
-    Run("https://radcalc.overdesigned.org/AscendingAorticDiameter")
-    WinActivate(Browser)
-    WinWaitActive(Browser)
-    WinMove(0,top,x_half,bottom,Browser)
-    
-    WinActivate(Epic)
-    WinWaitActive(Epic)
-    WinMove(x_half,top,x_half,bottom,Epic)
-    Sleep(200)
+epic_profile:=[58,87]
+epic_field_bottom:=[150,1105]
+epic_field_top:=[2,133]
 
+weight_regex:="\((.*?)kg\)"
+height_regex:="\((.*?)m\)"
+age_regex:=", (.*?) yrs,"
+female_regex:="Female"
+male_regex:="Male"
+
+GetEpicData()
+{
     CoordMode("Mouse", "Client")
     SendMode("Event")
     
@@ -35,14 +30,10 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
     ;Sleep(500)
     ;Click("312, 155")
     ;Sleep(200)
-
-    profile:=[58,87]
-    bottom:=[150,1105]
-    top:=[2,133]
     
-    Click(profile[1],profile[2])
+    Click(epic_profile[1],epic_profile[2])
     Sleep(1000)
-    MouseMove(bottom[1],bottom[2],0)
+    MouseMove(epic_field_bottom[1],epic_field_bottom[2],0)
     Sleep(-1)
     Send("{Wheeldown 10}")
     ;Send("{LButton Down}")
@@ -51,19 +42,13 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
     ;Sleep(-1)
     Send("{LButton Down}")
     ;Sleep(-1)
-    MouseMove(top[1],top[2],0)
+    MouseMove(epic_field_top[1],epic_field_top[2],0)
     Sleep(-1)
     Send("{LButton Up}")
     ;Sleep(-1)
     Send("^c")
     Sleep(100) ;Takes time for clipboard to populate
-    Click(bottom[1],bottom[2])
-    
-    weight_regex:="\((.*?)kg\)"
-    height_regex:="\((.*?)m\)"
-    age_regex:=", (.*?) yrs,"
-    female_regex:="Female"
-    male_regex:="Male"
+    Click(epic_field_bottom[1],epic_field_bottom[2])
 
     weight_result:=""
     height_result:=""
@@ -112,10 +97,17 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
         age:=age_result[1]
     }
 
-    WinActivate(Browser)
-    WinWaitActive(Browser)
-    Send("^0")
+    return {
+        weight_in_kg:weight_in_kg,
+        height_in_m:height_in_m,
+        age:age,
+        is_male:is_male,
+        is_female:is_female
+    }
+}
 
+EnterInfoIntoRadcalc(data)
+{
     age_box:="59, 421"
     height_box:="76, 474"
     weight_box:="151, 526"
@@ -130,26 +122,26 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
         Sleep(10)
     }
 
-    if(age!=="")
+    if(data.age!=="")
     {
-        enter_info(age_box,age)
+        enter_info(age_box,data.age)
     }
-    if(height_in_m!=="")
+    if(data.height_in_m!=="")
     {
-        enter_info(height_box,Round(height_in_m*100,1))
+        enter_info(height_box,Round(data.height_in_m*100,1))
     }
-    if(weight_in_kg!=="")
+    if(data.weight_in_kg!=="")
     {
-        enter_info(weight_box,weight_in_kg)
+        enter_info(weight_box,data.weight_in_kg)
     }
 
-    if(is_male == is_female)
+    if(data.is_male == data.is_female)
     {
         MsgBox("Couldn't determine sex.")
     }
     else
     {
-        if(is_male)
+        if(data.is_male)
         {
             Click(male_radio)
         }
@@ -160,4 +152,82 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
     }
 
     Click(empty)
+}
+
+GetMonitorCoords(monitor_index)
+{
+    MonitorGetWorkArea(monitor_index, &left, &top, &right, &bottom)
+    
+    x_half:=(left+right)/2
+    height:=(bottom-top)
+
+    return {
+        x_half:x_half,
+        height:height,
+        left:left,
+        top:top,
+        bottom:bottom,
+        right:right
+    }
+}
+
+CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
+{
+    monitor_index:=0
+    monitor:=GetMonitorCoords(monitor_index)
+      
+    WinActivate(Epic)
+    WinWaitActive(Epic)
+    WinMove(monitor.x_half,monitor.top,monitor.x_half,monitor.bottom,Epic)
+    Sleep(200)
+
+    data:=GetEpicData()
+
+    WinActivate(MSEdge)
+    WinWaitActive(MSEdge)
+    Send("^0")
+
+    url:="https://radcalc.overdesigned.org/AscendingAorticDiameter?"
+
+    append_url(key,value)
+    {
+        url:=url . key . "=" . value . "&"
+    }
+    
+    if(data.age!=="")
+    {
+        append_url("age",data.age)
+    }
+    if(data.height_in_m!=="")
+    {
+        append_url("height",Round(data.height_in_m*100,1))
+    }
+    if(data.weight_in_kg!=="")
+    {
+        append_url("weight",data.weight_in_kg)
+    }
+
+    if(data.is_male == data.is_female)
+    {
+        MsgBox("Couldn't determine sex.")
+    }
+    else
+    {
+        if(data.is_male)
+        {
+            append_url("sex","M")
+        }
+        else
+        {
+            append_url("sex","F")
+        }
+    }
+
+    Run(url)
+    WinActivate(MSEdge)
+    WinWaitActive(MSEdge)
+    WinMove(0,monitor.top,monitor.x_half,monitor.bottom,MSEdge)
+
+    ; Old way, use GET parameters instead
+    ; EnterInfoIntoRadcalc(data)
 }
