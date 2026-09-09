@@ -1,9 +1,11 @@
 ﻿#Requires AutoHotkey v2.0
 
-#Include Constants.ahk
-#Include GenericWindowFunctions.ahk
-#Include DEXA.ahk
-#Include AAo.ahk
+#Include components/Constants.ahk
+#Include components/GenericWindowFunctions.ahk
+#Include components/Powerscribe.ahk
+#Include components/DEXA.ahk
+#Include components/AAo.ahk
+#Include components/Testing.ahk
 
 ; 0 - Copy everything from powerscribe into browser
 ^+0::
@@ -85,7 +87,7 @@
 ; +
 ^+=::
 {
-    MsgBox("+")
+    Test()
 }
 
 ; * mapped to ,
@@ -124,22 +126,6 @@
 ^+'::
 {
     Activate_Click_Return(Intellispace, max_button, 10, true)
-}
-
-
-PowerscribeToggleDictation()
-{
-    Activate_Send_Return(PowerScribe, "{F4}", 30)
-}
-
-PowerscribePreviousField()
-{
-    Activate_Send_Return(PowerScribe, "+{Tab}")
-}
-
-PowerscribeNextField()
-{
-    Activate_Send_Return(PowerScribe, "{Tab}")
 }
 
 ; Enter
