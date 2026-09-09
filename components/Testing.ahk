@@ -14,8 +14,9 @@ Test(){
         if(front==ReportControl)
         {
             text:=ControlGetText(control,Powerscribe)
-            MsgBox("Found text " . text)
+            ControlGetPos(&OutX, &OutY, &OutWidth, &OutHeight, control,Powerscribe)
             ; Looks like it's the first one. Check size too might help?
+            ; Maybe move mouse around to determine which elements have this type?
         }
     }
     
