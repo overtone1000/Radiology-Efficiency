@@ -8,7 +8,8 @@ epic_field_bottom:=[150,1105]
 epic_field_top:=[2,133]
 
 weight_regex:="\((.*?)kg\)"
-height_regex:="\((.*?)m\)"
+height_regex_m:="\((.*?)m\)"
+height_regex_cm:="\((.*?)cm\)"
 age_regex:=", (.*?) yrs,"
 female_regex:="Female"
 male_regex:="Male"
@@ -51,11 +52,13 @@ GetEpicData()
     Click(epic_field_bottom[1],epic_field_bottom[2])
 
     weight_result:=""
-    height_result:=""
+    height_result_m:=""
+    height_result_cm:=""
     age_result:=""
 
     weight_index:=RegExMatch(A_Clipboard,weight_regex,&weight_result)
-    height_index:=RegExMatch(A_Clipboard,height_regex,&height_result)
+    height_m_index:=RegExMatch(A_Clipboard,height_regex_m,&height_m_result)
+    height_cm_index:=RegExMatch(A_Clipboard,height_regex_cm,&height_cm_result)
     age_index:=RegExMatch(A_Clipboard,age_regex,&age_result)
     male_index:=RegExMatch(A_Clipboard,male_regex)
     female_index:=RegExMatch(A_Clipboard,female_regex)
@@ -67,7 +70,7 @@ GetEpicData()
     is_female:=female_index>0
 
     weight_in_kg:=""
-    height_in_m:=""
+    height_in_cm:=""
     age:=""
 
     if(weight_index==0)
@@ -79,13 +82,20 @@ GetEpicData()
         weight_in_kg:=weight_result[1]
     }
 
-    if(height_index==0)
+    if(height_cm_index==0 && height_m_index==0)
     {
         MsgBox("Couldn't get height.")
     }
     else
     {
-        height_in_m:=height_result[1]
+        if(height_cm_index!=0)
+        {
+            height_in_cm:=height_cm_result[1]
+        }
+        else if(height_m_index!=0)
+        {
+            height_in_cm:=height_m_result[1]*100
+        }
     }
     
     if(age_index==0)
@@ -99,7 +109,7 @@ GetEpicData()
 
     return {
         weight_in_kg:weight_in_kg,
-        height_in_m:height_in_m,
+        height_in_cm:height_in_cm,
         age:age,
         is_male:is_male,
         is_female:is_female
@@ -198,9 +208,9 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
     {
         append_url("age",data.age)
     }
-    if(data.height_in_m!=="")
+    if(data.height_in_cm!=="")
     {
-        append_url("height",Round(data.height_in_m*100,1))
+        append_url("height",Round(data.height_in_cm,1))
     }
     if(data.weight_in_kg!=="")
     {
