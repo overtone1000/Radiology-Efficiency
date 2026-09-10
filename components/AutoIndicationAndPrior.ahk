@@ -70,5 +70,6 @@ AutoIndicationAndPrior()
         A_Clipboard:="None"
     }
     Send("^v")
+    Sleep(100)
     A_Clipboard:=res.ocr_result.Text
 }
