@@ -44,7 +44,7 @@ CopyFromRadcalcDEXAToPowerscribeAndSignReport()
                 WinActivate(Powerscribe)
                 Send("^a")
                 Send("^v")
-                Send("^{Home}")
+                Send("^{Home}") ; To beginning of report
                 Sleep(1000)
                 Send("{F12}") ; sign report
             }
