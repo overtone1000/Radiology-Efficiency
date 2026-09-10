@@ -27,13 +27,13 @@ GetDateFromControlText(text)
     ; Regex
     ; One space on the front and back
     ; Two digits, a dash, three letters, a dash, four digits
-    date_regex:=" (\d{2}-[A-Za-z]{3}-\d{4}) "
-
+    date_regex:="( )(\d{2}-[A-Za-z]{3}-\d{4})( )"
+    
     result:=RegExMatch(text,date_regex,&date_result)
 
     if(result>0)
     {
-        retval:=date_result[1]
+        retval:=date_result[2]
     }
 
     return retval
@@ -42,7 +42,10 @@ GetDateFromControlText(text)
 GetPriorDate()
 {
     control:=GetStudyOnRightControl()
-    ocr_result:=OCRSpecificControl(ChangePACS,control)
+    ocr_result:=OCRSpecificControl(ChangePACS,control,true)
     date:=GetDateFromControlText(ocr_result.Text)
-    return date
+    return {
+        ocr_result:ocr_result,
+        date:date
+    }
 }

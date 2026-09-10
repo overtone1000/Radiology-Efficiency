@@ -60,7 +60,7 @@ BackgroundSend(window,message)
     hWnd := WinExist(window)
     if hWnd
     {
-        SetKeyDelay (10, 30) ; 10ms between keys, 50ms press duration
+        SetKeyDelay (10, 30) ; 10ms between keys, 30ms press duration
 
         ;F1::ControlSend, ahk_parent, {F4}, ahk_exe Nuance.PowerScribe360.exe
 

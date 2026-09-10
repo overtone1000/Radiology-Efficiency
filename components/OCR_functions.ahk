@@ -7,7 +7,7 @@ OCRSpecificControl(window,control,inverted:=false)
     ControlGetPos(&x,&y,&w,&h,control,window)
     
     options := {
-        scale: 5,
+        scale: 3,
         grayscale: false,
         ; monochrome: 0-255
         invertcolors: inverted,

@@ -5,7 +5,7 @@
 #Include components/Powerscribe.ahk
 #Include components/DEXA.ahk
 #Include components/AAo.ahk
-#Include components/PutPriorDateInReport.ahk
+#Include components/AutoIndicationAndPrior.ahk
 #Include components/Testing.ahk
 
 ; 0 - Copy everything from powerscribe into browser
@@ -94,7 +94,7 @@
 ; * mapped to ,
 ^+,::
 {
-    PutPriorDateInReport()
+    AutoIndicationAndPrior()
 }
 
 ; -
