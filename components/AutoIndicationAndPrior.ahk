@@ -62,6 +62,8 @@ AutoIndicationAndPrior()
     Sleep(500)
 
     res:=GetPriorDate()
+    WinActivate(PowerScribe)
+    WinWaitActive(PowerScribe)
     if(IsSet(res) AND res.date!="")
     {
         A_Clipboard:=res.date
