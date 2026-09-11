@@ -5,6 +5,9 @@
 
 GetStudyOnRightControl()
 {
+    WinActivate(ChangePACS)
+    WinWaitActive(ChangePACS)
+    
     control1:="AliTbCntrlStudyDetails1"
     control2:="AliTbCntrlStudyDetails2"
 
@@ -31,6 +34,7 @@ GetStudyOnRightControl()
     }
     else
     {
+        MsgBox("Is sets: " . IsSet(x1) . " " . IsSet(x2))
         return
     }
 }
