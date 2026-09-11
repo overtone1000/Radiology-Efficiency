@@ -35,6 +35,49 @@ GetStudyOnRightControl()
     }
 }
 
+number_letter_lookalikes:=
+[
+    ["i","1"],
+    ["o","0"],
+    ["g","9"]
+]
+
+months:=
+[
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "may",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "oct",
+    "nov",
+    "dec",
+]
+
+ForceToNumbers(str)
+{
+    retval:=str
+    for(pair in number_letter_lookalikes)
+    {
+        retval:=StrReplace(retval,pair[1],pair[2])
+    }
+    return retval
+}
+
+ForceToLetters(str)
+{
+    retval:=str
+    for(pair in number_letter_lookalikes)
+    {
+        retval:=StrReplace(retval,pair[2],pair[1])
+    }
+    return retval
+}
+
 GetDateFromControlText(text)
 {
     retval:=""
@@ -42,13 +85,33 @@ GetDateFromControlText(text)
     ; Regex
     ; One space on the front and back
     ; Two digits, a dash, three letters, a dash, four digits
-    date_regex:="( )(\d{2}-[A-Za-z]{3}-\d{4})( )"
+    date_regex:="( )(.{2}-.{3}-.{4})( )"
     
     result:=RegExMatch(text,date_regex,&date_result)
 
     if(result>0)
     {
-        retval:=date_result[2]
+        rawdateregex:=date_result[2]
+        
+        ;Force to lowercase
+        rawdateregex:=StrLower(rawdateregex)
+
+        fields:=StrSplit(rawdateregex,"-")
+        
+        day:=ForceToNumbers(fields[1])
+        month:=ForceToLetters(fields[2])
+        year:=ForceToNumbers(fields[3])
+
+        for(index,value in months)
+        {
+            if(month==value)
+            {
+                month:=index
+                break
+            }
+        }
+
+        retval:=month . "/" . day . "/" . year
     }
 
     return retval
