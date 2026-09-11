@@ -7,16 +7,31 @@ GetStudyOnRightControl()
 {
     control1:="AliTbCntrlStudyDetails1"
     control2:="AliTbCntrlStudyDetails2"
-    ControlGetPos(&x1,&y1,&w1,&h1,control1,ChangePACS)
-    ControlGetPos(&x2,&y2,&w2,&h2,control2,ChangePACS)
 
-    if(x1>x2)
+    try 
     {
-        return control1
+        ControlGetPos(&x1,&y1,&w1,&h1,control1,ChangePACS)
+    }
+    try 
+    {
+        ControlGetPos(&x2,&y2,&w2,&h2,control2,ChangePACS)
+    }
+
+
+    if(IsSet(x1) AND IsSet(x2))
+    {
+        if(x1>x2)
+        {
+            return control1
+        }
+        else
+        {
+            return control2
+        }
     }
     else
     {
-        return control2
+        return
     }
 }
 
@@ -42,10 +57,13 @@ GetDateFromControlText(text)
 GetPriorDate()
 {
     control:=GetStudyOnRightControl()
-    ocr_result:=OCRSpecificControl(ChangePACS,control,true)
-    date:=GetDateFromControlText(ocr_result.Text)
-    return {
-        ocr_result:ocr_result,
-        date:date
+    if(IsSet(control))
+    {
+        ocr_result:=OCRSpecificControl(ChangePACS,control,true)
+        date:=GetDateFromControlText(ocr_result.Text)
+        return {
+            ocr_result:ocr_result,
+            date:date
+        }
     }
 }

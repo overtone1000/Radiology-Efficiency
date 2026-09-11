@@ -61,7 +61,7 @@ AutoIndicationAndPrior()
     Sleep(500)
 
     res:=GetPriorDate()
-    if(res.date!="")
+    if(IsSet(res) AND res.date!="")
     {
         A_Clipboard:=res.date
     }
@@ -70,6 +70,6 @@ AutoIndicationAndPrior()
         A_Clipboard:="None"
     }
     Send("^v")
-    Sleep(100)
+    Sleep(1000)
     A_Clipboard:=res.ocr_result.Text
 }
