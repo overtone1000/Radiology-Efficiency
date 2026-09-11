@@ -53,6 +53,7 @@ AutoIndicationAndPrior()
         }
         if(selected_history!="")
         A_Clipboard:=selected_history
+        Sleep(100)
         Send("^v")
     }
 
