@@ -151,6 +151,11 @@ Alt & n::
     PowerscribeNextField()
 }
 
+^+a::
+{
+    CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
+}
+
 Ctrl & e::
 {
     ToggleVisibility(Epic,false)

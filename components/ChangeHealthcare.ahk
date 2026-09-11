@@ -34,7 +34,20 @@ GetStudyOnRightControl()
     }
     else
     {
-        MsgBox("Is sets: " . IsSet(x1) . " " . IsSet(x2))
+        if(IsSet(x1))
+        {
+            if(x1>0)
+            {
+                return control1
+            }
+        }
+        else if(IsSet(x2))
+        {
+            if(x2>0)
+            {
+                return control2
+            }
+        }
         return
     }
 }
@@ -127,10 +140,13 @@ GetPriorDate()
     if(IsSet(control))
     {
         ocr_result:=OCRSpecificControl(ChangePACS,control,true)
-        date:=GetDateFromControlText(ocr_result.Text)
-        return {
-            ocr_result:ocr_result,
-            date:date
+        if(IsSet(ocr_result) AND ocr_result!="")
+        {
+            date:=GetDateFromControlText(ocr_result.Text)
+            return {
+                ocr_result:ocr_result,
+                date:date
+            }
         }
     }
 }
