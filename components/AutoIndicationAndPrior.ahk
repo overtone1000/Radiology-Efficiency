@@ -56,11 +56,12 @@ AutoIndicationAndPrior()
         PasteToActiveWindow()
     }
 
-    Sleep(500)
+    ;No need to sleep here. PasteToActiveWindow handles its own sleep.
+    ;Sleep(500)
     Send("{Tab}")
     Sleep(500)
 
-    res:=GetPriorDate()
+    res:=GetPriorDate() ;This causes powerscribe to lose focus
     WinActivate(PowerScribe)
     if(IsSet(res) AND res!="" AND res.date!="")
     {
