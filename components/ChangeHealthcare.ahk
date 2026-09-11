@@ -56,7 +56,8 @@ number_letter_lookalikes:=
 [
     ["i","1"],
     ["o","0"],
-    ["g","9"]
+    ["g","9"],
+    ["a","4"]
 ]
 
 months:=
@@ -139,7 +140,7 @@ GetPriorDate()
     control:=GetStudyOnRightControl()
     if(IsSet(control))
     {
-        ocr_result:=OCRSpecificControl(ChangePACS,control,true)
+        ocr_result:=OCRSpecificControl(ChangePACS,control,CHANGE_DATE_OCR_OPTIONS)
         if(IsSet(ocr_result) AND ocr_result!="")
         {
             date:=GetDateFromControlText(ocr_result.Text)

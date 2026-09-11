@@ -62,7 +62,7 @@ AutoIndicationAndPrior()
 
     res:=GetPriorDate()
     WinActivate(PowerScribe)
-    if(IsSet(res) AND res.date!="")
+    if(IsSet(res) AND res!="" AND res.date!="")
     {
         A_Clipboard:=res.date
     }
@@ -74,5 +74,8 @@ AutoIndicationAndPrior()
     PasteToActiveWindow()
     
     Sleep(1000) ; Can sleep for a long time here, the rest is just for debugging
-    A_Clipboard:=res.ocr_result.Text
+    if(IsSet(res) AND res!="" AND res.ocr_result!="")
+    {
+        A_Clipboard:=res.ocr_result.Text
+    }
 }
