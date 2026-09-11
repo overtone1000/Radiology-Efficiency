@@ -13,6 +13,7 @@ Activate_Run_Return(window,bound_function,delay:="")
     else
     {
         WinActivate(window)
+        WinWaitActive(window)
         ; Sleep delay ; Not needed
         bound_function()
         if delay
@@ -20,6 +21,7 @@ Activate_Run_Return(window,bound_function,delay:="")
             Sleep delay ; Definitely needed for dictation toggle!
         }
         WinActivate(current)
+        ; No need to wait for activation
     }
 
     Return

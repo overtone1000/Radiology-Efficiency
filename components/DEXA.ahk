@@ -5,27 +5,28 @@
 
 CopyFromPowerscribeToRadcalcDEXA()
 {
-    WinActivate(Powerscribe)
-    Send("^a")
-    Sleep(200) ; Make sure selection happens
-    Send("^x")
-    Sleep(200) ; Make sure full cut happens
-    WinMinimize(Powerscribe)
-    Sleep(200)
-    
-    WinActivate(RadCalc)
-    
-    while((A_Index < 300) && NOT WinActive(RadCalc))
+    if(WinExist(RadCalc))
     {
-        Sleep(10)
-    }
+        WinActivate(Powerscribe)
+        WinWaitActive(PowerScribe)
+        Send("^a")
+        Sleep(200) ; Make sure selection happens
+        Send("^x")
+        Sleep(200) ; Make sure full cut happens
+        WinMinimize(Powerscribe)
+        Sleep(200)
+        
+        WinActivate(RadCalc)
+        WinWaitActive(RadCalc)
 
-    if WinActive(RadCalc)
-    {
         CoordMode("Mouse", "Client")
         Click(radcalc_ingest_button)
         Sleep(100)
         A_Clipboard := "" ; Clear the clipboard to avoid problems!
+    }
+    else
+    {
+        MsgBox("RadCalc not open.")
     }
 }
 
@@ -42,8 +43,9 @@ CopyFromRadcalcDEXAToPowerscribeAndSignReport()
             if WinActive(RadCalc)
             {
                 WinActivate(Powerscribe)
+                WinWaitActive(PowerScribe)
                 Send("^a")
-                Send("^v")
+                PasteToActiveWindow()
                 Send("^{Home}") ; To beginning of report
                 Sleep(1000)
                 Send("{F12}") ; sign report

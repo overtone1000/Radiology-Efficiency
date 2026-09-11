@@ -2,6 +2,7 @@
 
 #Include Constants.ahk
 #Include GenericWindowFunctions.ahk
+#Include GenericClipboardFunctions.ahk
 
 epic_profile:=[58,87]
 epic_field_bottom:=[150,1105]
@@ -47,7 +48,7 @@ GetEpicData()
     Sleep(-1)
     Send("{LButton Up}")
     ;Sleep(-1)
-    Send("^c")
+    CopyFromActiveWindow()
     Sleep(100) ;Takes time for clipboard to populate
     Click(epic_field_bottom[1],epic_field_bottom[2])
 

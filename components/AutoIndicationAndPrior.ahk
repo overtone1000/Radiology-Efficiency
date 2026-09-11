@@ -2,7 +2,7 @@
 
 #Include Powerscribe.ahk
 #Include ChangeHealthcare.ahk
-
+#Include GenericClipboardFunctions.ahk
 
 
 AutoIndicationAndPrior()
@@ -15,7 +15,7 @@ AutoIndicationAndPrior()
     Sleep(100)
     Send("{Tab}")
     Sleep(500)
-    Send("^c")
+    CopyFromActiveWindow()
     Sleep(500)
 
     histories:=StrSplit(A_Clipboard,"`n","`r")
@@ -54,7 +54,7 @@ AutoIndicationAndPrior()
         if(selected_history!="")
         A_Clipboard:=selected_history
         Sleep(500)
-        Send("^v")
+        PasteToActiveWindow()
     }
 
     Sleep(500)
@@ -63,7 +63,6 @@ AutoIndicationAndPrior()
 
     res:=GetPriorDate()
     WinActivate(PowerScribe)
-    WinWaitActive(PowerScribe)
     if(IsSet(res) AND res.date!="")
     {
         A_Clipboard:=res.date
@@ -72,7 +71,9 @@ AutoIndicationAndPrior()
     {
         A_Clipboard:="None"
     }
-    Send("^v")
-    Sleep(1000)
+    WinWaitActive(PowerScribe)
+    PasteToActiveWindow()
+    
+    Sleep(1000) ; Can sleep for a long time here, the rest is just for debugging
     A_Clipboard:=res.ocr_result.Text
 }
