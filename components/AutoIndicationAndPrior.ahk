@@ -16,7 +16,6 @@ AutoIndicationAndPrior()
     Send("{Tab}")
     Sleep(500)
     CopyFromActiveWindow()
-    Sleep(500)
 
     histories:=StrSplit(A_Clipboard,"`n","`r")
     parsed_histories:=[]
