@@ -57,7 +57,8 @@ number_letter_lookalikes:=
     ["i","1"],
     ["o","0"],
     ["g","9"],
-    ["a","4"]
+    ["a","4"],
+    ["l","1"]
 ]
 
 months:=
