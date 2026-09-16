@@ -104,7 +104,6 @@ ForceToLetters(str)
 
 ForceToKnownMonth(str)
 {
-    MsgBox("Checking month" . str)
     str:=ForceToLetters(str)
 
     for(lookalike in month_lookalikes)
