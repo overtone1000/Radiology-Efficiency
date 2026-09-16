@@ -61,6 +61,11 @@ number_letter_lookalikes:=
     ["l","1"]
 ]
 
+month_lookalikes:=
+[
+    ["juf","jul"]
+]
+
 months:=
 [
     "jan",
@@ -97,20 +102,40 @@ ForceToLetters(str)
     return retval
 }
 
+ForceToKnownMonth(str)
+{
+    MsgBox("Checking month" . str)
+    str:=ForceToLetters(str)
+
+    for(lookalike in month_lookalikes)
+    {
+        if(str==lookalike[1])
+        {
+            str:=lookalike[2]
+            break
+        }
+    }
+
+    MsgBox(str)
+    return str
+}
+
 GetDateFromControlText(text)
 {
     retval:=""
 
     ; Regex
-    ; One space on the front and back
-    ; Two digits, a dash, three letters, a dash, four digits
-    date_regex:="( )(.{2}-.{3}-.{4})( )"
+    ; Two chars, a dash, three chars, a dash, four chars
+    date_regex:="(.{2}-.{3}-.{4})"
     
-    result:=RegExMatch(text,date_regex,&date_result)
+    ; Remove spaces, sometimes erroneously detects a space character
+    no_spaces:=StrReplace(text, " ", "")
+
+    result:=RegExMatch(no_spaces,date_regex,&date_result)
 
     if(result>0)
     {
-        rawdateregex:=date_result[2]
+        rawdateregex:=date_result[1]
         
         ;Force to lowercase
         rawdateregex:=StrLower(rawdateregex)
@@ -118,7 +143,7 @@ GetDateFromControlText(text)
         fields:=StrSplit(rawdateregex,"-")
         
         day:=ForceToNumbers(fields[1])
-        month:=ForceToLetters(fields[2])
+        month:=ForceToKnownMonth(fields[2])
         year:=ForceToNumbers(fields[3])
 
         for(index,value in months)
@@ -132,7 +157,12 @@ GetDateFromControlText(text)
 
         retval:=month . "/" . day . "/" . year
     }
-
+    else
+    {
+        ;Only for debugging
+        ;MsgBox(no_spaces)
+    }
+    
     return retval
 }
 
