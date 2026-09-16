@@ -116,7 +116,6 @@ ForceToKnownMonth(str)
         }
     }
 
-    MsgBox(str)
     return str
 }
 
