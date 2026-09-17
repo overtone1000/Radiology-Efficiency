@@ -194,9 +194,12 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
 
     data:=GetEpicData()
 
-    WinActivate(MSEdge)
-    WinWaitActive(MSEdge)
-    Send("^0")
+    if WinExist(MSEdge)
+    {
+        WinActivate(MSEdge)
+        WinWaitActive(MSEdge)
+        Send("^0")
+    }
 
     url:="https://radcalc.overdesigned.org/AscendingAorticDiameter?"
 
@@ -235,9 +238,14 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
     }
 
     Run(url)
-    WinActivate(MSEdge)
-    WinWaitActive(MSEdge)
-    WinMove(0,monitor.top,monitor.x_half,monitor.bottom,MSEdge)
+    ;
+    ;pid:="ahk_pid " . OutputPID ; This does not work unfortunately
+    
+    id:="ahk_id " . WinWait(RadCalcAAo)
+    WinActivate(id)
+    WinWaitActive(id)
+
+    WinMove(0,monitor.top,monitor.x_half,monitor.bottom,id)
 
     ; Old way, use GET parameters instead
     ; EnterInfoIntoRadcalc(data)

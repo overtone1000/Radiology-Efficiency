@@ -5,7 +5,7 @@
 
 CopyFromPowerscribeToRadcalcDEXA()
 {
-    if(WinExist(RadCalc))
+    if(WinExist(RadCalcDEXA))
     {
         WinActivate(Powerscribe)
         WinWaitActive(PowerScribe)
@@ -16,8 +16,8 @@ CopyFromPowerscribeToRadcalcDEXA()
         WinMinimize(Powerscribe)
         Sleep(200)
         
-        WinActivate(RadCalc)
-        WinWaitActive(RadCalc)
+        WinActivate(RadCalcDEXA)
+        WinWaitActive(RadCalcDEXA)
 
         CoordMode("Mouse", "Client")
         Click(radcalc_ingest_button)
@@ -26,7 +26,7 @@ CopyFromPowerscribeToRadcalcDEXA()
     }
     else
     {
-        MsgBox("RadCalc not open.")
+        MsgBox("RadCalcDEXA not open.")
     }
 }
 
@@ -38,9 +38,9 @@ CopyFromRadcalcDEXAToPowerscribeAndSignReport()
     }
     else
     {
-        if WinExist(RadCalc)
+        if WinExist(RadCalcDEXA)
         {
-            if WinActive(RadCalc)
+            if WinActive(RadCalcDEXA)
             {
                 WinActivate(Powerscribe)
                 WinWaitActive(PowerScribe)
