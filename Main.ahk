@@ -143,6 +143,11 @@ Alt & n::
     CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
 }
 
+^+h::
+{
+    AutoIndicationAndPrior()
+}
+
 Ctrl & e::
 {
     ToggleVisibility(Epic,false)
