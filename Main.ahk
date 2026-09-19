@@ -89,6 +89,9 @@
 ; +
 ^+=::
 {
+     ; Can get this working by running in VSCode with AHK++ either right click and run "Debug Configurations"
+     ; or Ctrl+Alt+F9
+    OutputDebug("Debug output!")
     Test()
 }
 
