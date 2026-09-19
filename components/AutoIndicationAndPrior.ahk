@@ -3,12 +3,15 @@
 #Include Powerscribe.ahk
 #Include ChangeHealthcare.ahk
 #Include GenericClipboardFunctions.ahk
-
+#Include GenericWindowFunctions.ahk
 
 AutoIndicationAndPrior()
 {
-    WinActivate(PowerScribe)
-    WinWaitActive(PowerScribe)
+    if Activate_And_Wait(Powerscribe,2)==0 
+    {
+        return
+    }
+
     Send("^{Home}") ; To beginning of report
     Sleep(100)
     Send("{Down}")
@@ -62,7 +65,6 @@ AutoIndicationAndPrior()
     Sleep(500)
 
     res:=GetPriorDate() ;This causes powerscribe to lose focus
-    WinActivate(PowerScribe)
     if(IsSet(res) AND res!="" AND res.date!="")
     {
         A_Clipboard:=res.date
@@ -71,7 +73,10 @@ AutoIndicationAndPrior()
     {
         A_Clipboard:="None"
     }
-    WinWaitActive(PowerScribe)
+    if Activate_And_Wait(Powerscribe,2)==0 
+    {
+        return
+    }
     PasteToActiveWindow()
     
     Sleep(1000) ; Can sleep for a long time here, the rest is just for debugging

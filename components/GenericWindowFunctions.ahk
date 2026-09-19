@@ -2,6 +2,19 @@
 
 #Include GenericWindowFunctions.ahk
 
+Activate_And_Wait(window, timeout)
+{
+    if(WinExist(window))
+    {
+        WinActivate(window)
+        return WinWaitActive(window,,timeout)
+    }
+    else
+    {
+        return 0
+    }
+}
+
 Activate_Run_Return(window,bound_function,delay:="")
 {
     current := WinActive("A")
