@@ -28,8 +28,35 @@ PowerscribeDirectReportAccess()
     ; ControlGetText()
 }
 
+FuzzPowerscribe()
+{
+    ; Got to about 16000 and didn't get anything
 
+    MsgType   := 0x0111 ; WM_COMMAND
+    DelayMs := 1
+    Loop
+    {
+        HexStr := Format("0x{:X}", A_Index)
+        OutputDebug("Sending Msg: " HexStr " (" A_Index ")")
+        
+        ; PostMessage does not wait for a response, making it faster for fuzzing
+        PostMessage(MsgType, A_Index, 0, , PowerScribe)
+        
+        Sleep(DelayMs)
+    }
+}
 
 Test(){
-    MsgBox("Test complete")
+    OutputDebug("Starting test.")
+     ; Can get this working by running in VSCode with AHK++ either right click and run "Debug Configurations"
+     ; or Ctrl+Alt+F9
+     ; FuzzPowerscribe()
+    OutputDebug("Test complete!")
+}
+
+^+!Space::
+{
+     ; Can get this working by running in VSCode with AHK++ either right click and run "Debug Configurations"
+     ; or Ctrl+Alt+F9
+    Test()
 }
