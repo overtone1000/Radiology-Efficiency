@@ -35,85 +35,94 @@ GetEpicData()
     
     Click(epic_profile[1],epic_profile[2])
     Sleep(1000)
-    MouseMove(epic_field_bottom[1],epic_field_bottom[2],0)
-    Sleep(-1)
-    Send("{Wheeldown 10}")
-    ;Send("{LButton Down}")
-    ;Sleep(-1)
-    ;Send("{LButton Up}")
-    ;Sleep(-1)
-    Send("{LButton Down}")
-    ;Sleep(-1)
-    MouseMove(epic_field_top[1],epic_field_top[2],0)
-    Sleep(-1)
-    Send("{LButton Up}")
-    ;Sleep(-1)
-    CopyFromActiveWindow()
-    Sleep(100) ;Takes time for clipboard to populate
-    Click(epic_field_bottom[1],epic_field_bottom[2])
-
-    weight_result:=""
-    height_result_m:=""
-    height_result_cm:=""
-    age_result:=""
-
-    weight_index:=RegExMatch(A_Clipboard,weight_regex,&weight_result)
-    height_m_index:=RegExMatch(A_Clipboard,height_regex_m,&height_m_result)
-    height_cm_index:=RegExMatch(A_Clipboard,height_regex_cm,&height_cm_result)
-    age_index:=RegExMatch(A_Clipboard,age_regex,&age_result)
-    male_index:=RegExMatch(A_Clipboard,male_regex)
-    female_index:=RegExMatch(A_Clipboard,female_regex)
-
-    ; Clear clipboard of identifying information
-    A_Clipboard:=""
-
-    is_male:=male_index>0
-    is_female:=female_index>0
-
-    weight_in_kg:=""
-    height_in_cm:=""
-    age:=""
-
-    if(weight_index==0)
-    {
-        MsgBox("Couldn't get weight.")
-    }
-    else
-    {
-        weight_in_kg:=weight_result[1]
-    }
-
-    if(height_cm_index==0 && height_m_index==0)
-    {
-        MsgBox("Couldn't get height.")
-    }
-    else
-    {
-        if(height_cm_index!=0)
-        {
-            height_in_cm:=height_cm_result[1]
-        }
-        else if(height_m_index!=0)
-        {
-            height_in_cm:=height_m_result[1]*100
-        }
-    }
+    Loop {
+        OutputDebug("Trying to get Epic data. " . A_Index)
+        MouseMove(epic_field_bottom[1],epic_field_bottom[2],0)
+        Sleep(-1)
+        Send("{Wheeldown 10}")
+        ;Send("{LButton Down}")
+        ;Sleep(-1)
+        ;Send("{LButton Up}")
+        ;Sleep(-1)
+        Send("{LButton Down}")
+        ;Sleep(-1)
+        MouseMove(epic_field_top[1],epic_field_top[2],0)
+        Sleep(-1)
+        Send("{LButton Up}")
+        ;Sleep(-1)
+        ; OutputDebug("Trying to copy.")
+        CopyFromActiveWindow(0.5)
+        Click(epic_field_bottom[1],epic_field_bottom[2])
+        ; OutputDebug("Finished " . A_Clipboard . " " . A_Index)
+    } Until A_Clipboard!="" Or A_Index==3
     
-    if(age_index==0)
-    {
-        MsgBox("Couldn't get age.")
-    }
-    else
-    {
-        age:=age_result[1]
-    }
+    ; OutputDebug("Done, clipboard is " . A_Clipboard)
 
-    return {
-        weight_in_kg:weight_in_kg,
-        height_in_cm:height_in_cm,
-        age:age,
-        is_male:is_male,
-        is_female:is_female
+    if A_Clipboard!=""
+    {
+        weight_result:=""
+        height_result_m:=""
+        height_result_cm:=""
+        age_result:=""
+
+        weight_index:=RegExMatch(A_Clipboard,weight_regex,&weight_result)
+        height_m_index:=RegExMatch(A_Clipboard,height_regex_m,&height_m_result)
+        height_cm_index:=RegExMatch(A_Clipboard,height_regex_cm,&height_cm_result)
+        age_index:=RegExMatch(A_Clipboard,age_regex,&age_result)
+        male_index:=RegExMatch(A_Clipboard,male_regex)
+        female_index:=RegExMatch(A_Clipboard,female_regex)
+
+        ; Clear clipboard of identifying information
+        A_Clipboard:=""
+
+        is_male:=male_index>0
+        is_female:=female_index>0
+
+        weight_in_kg:=""
+        height_in_cm:=""
+        age:=""
+
+        if(weight_index==0)
+        {
+            MsgBox("Couldn't get weight.")
+        }
+        else
+        {
+            weight_in_kg:=weight_result[1]
+        }
+
+        if(height_cm_index==0 && height_m_index==0)
+        {
+            MsgBox("Couldn't get height.")
+        }
+        else
+        {
+            if(height_cm_index!=0)
+            {
+                height_in_cm:=height_cm_result[1]
+            }
+            else if(height_m_index!=0)
+            {
+                height_in_cm:=height_m_result[1]*100
+            }
+        }
+        
+        if(age_index==0)
+        {
+            MsgBox("Couldn't get age.")
+        }
+        else
+        {
+            age:=age_result[1]
+        }
+
+        return {
+            weight_in_kg:weight_in_kg,
+            height_in_cm:height_in_cm,
+            age:age,
+            is_male:is_male,
+            is_female:is_female
+        }
     }
 }
 
@@ -194,59 +203,62 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
 
     data:=GetEpicData()
 
-    if WinExist(MSEdge)
+    if(data)
     {
-        WinActivate(MSEdge)
-        WinWaitActive(MSEdge)
-        Send("^0")
-    }
-
-    url:="https://radcalc.overdesigned.org/AscendingAorticDiameter?"
-
-    append_url(key,value)
-    {
-        url:=url . key . "=" . value . "&"
-    }
-    
-    if(data.age!=="")
-    {
-        append_url("age",data.age)
-    }
-    if(data.height_in_cm!=="")
-    {
-        append_url("height",Round(data.height_in_cm,1))
-    }
-    if(data.weight_in_kg!=="")
-    {
-        append_url("weight",data.weight_in_kg)
-    }
-
-    if(data.is_male == data.is_female)
-    {
-        MsgBox("Couldn't determine sex.")
-    }
-    else
-    {
-        if(data.is_male)
+        if WinExist(MSEdge)
         {
-            append_url("sex","M")
+            WinActivate(MSEdge)
+            WinWaitActive(MSEdge)
+            Send("^0")
+        }
+
+        url:="https://radcalc.overdesigned.org/AscendingAorticDiameter?"
+
+        append_url(key,value)
+        {
+            url:=url . key . "=" . value . "&"
+        }
+        
+        if(data.age!=="")
+        {
+            append_url("age",data.age)
+        }
+        if(data.height_in_cm!=="")
+        {
+            append_url("height",Round(data.height_in_cm,1))
+        }
+        if(data.weight_in_kg!=="")
+        {
+            append_url("weight",data.weight_in_kg)
+        }
+
+        if(data.is_male == data.is_female)
+        {
+            MsgBox("Couldn't determine sex.")
         }
         else
         {
-            append_url("sex","F")
+            if(data.is_male)
+            {
+                append_url("sex","M")
+            }
+            else
+            {
+                append_url("sex","F")
+            }
         }
+
+        Run(url)
+        ;
+        ;pid:="ahk_pid " . OutputPID ; This does not work unfortunately
+        
+        id:="ahk_id " . WinWait(RadCalcAAo)
+        WinActivate(id)
+        WinWaitActive(id)
+
+        WinMove(0,monitor.top,monitor.x_half,monitor.bottom,id)
+
+        ; Old way, use GET parameters instead
+        ; EnterInfoIntoRadcalc(data)
     }
-
-    Run(url)
-    ;
-    ;pid:="ahk_pid " . OutputPID ; This does not work unfortunately
-    
-    id:="ahk_id " . WinWait(RadCalcAAo)
-    WinActivate(id)
-    WinWaitActive(id)
-
-    WinMove(0,monitor.top,monitor.x_half,monitor.bottom,id)
-
-    ; Old way, use GET parameters instead
-    ; EnterInfoIntoRadcalc(data)
 }
