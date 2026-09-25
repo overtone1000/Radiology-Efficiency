@@ -14,3 +14,12 @@ But, this disables the native command! In this case, selecting all with Ctrl+A w
 Dependencies are in the `libraries` directory.
 
 - https://github.com/Descolada/OCR
+
+Capture2Text
+
+## Shortcuts
+
+Capture2Text for prior
+```
+C:\Users\B909907\OneDrive - Kaiser Permanente\@Tyler\Efficiency\Applications\Capture2Text\Capture2Text_CLI.exe --clipboard --screen-rect "3200 95 4363 123"
+```
