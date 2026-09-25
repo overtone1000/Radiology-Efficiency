@@ -1,6 +1,7 @@
 #Requires AutoHotkey v2.0
 
 #Include ../libraries/OCR.ahk
+#Include Constants.ahk
 
 CHANGE_DATE_OCR_OPTIONS := {
     scale: 3,
@@ -17,7 +18,7 @@ CHANGE_DATE_OCR_OPTIONS := {
     ; h: h,
 }
 
-OCRSpecificControl(window,control,options)
+OCRSpecificControl_Windows(window,control,options)
 {
     try
     {
@@ -32,5 +33,37 @@ OCRSpecificControl(window,control,options)
 
         ; ocr_result:=OCR.FromBitmap(original_bmp, options)
         return OCR.FromWindow(window,options)
+    }
+}
+
+OCRSpecificControl_Capture2Text(window,control)
+{
+    try
+    {
+        
+        ControlGetPos(&x,&y,&w,&h,control,window)
+        
+        ; Change to absolute screen coordinates for Capture2Text
+        WinGetPos(&winx, &winy, , , window)
+        x:=winx+x
+        y:=winy+y
+
+        ; ocr_result:=OCR.FromBitmap(original_bmp, options)
+
+        Coordinates := "`"" . x . " " . y  . " " . x+w . " " . y+h . "`""
+        ; Use /k for debugging, /c for production
+        Mode1:=" /c "
+        ; Use "Max" for debugging, "Hide" for production
+        Mode2:="Hide"
+        Command := A_Comspec . Mode1 . Capture2Text_Executable . " --clipboard" . " --screen-rect " . Coordinates . ""
+        OutputDebug("Command is: " . Command)
+        A_Clipboard:=""
+        RunWait(Command,Capture2Text_Directory,Mode2)
+        ClipWait(3)
+        OutputDebug("Clipboard is " . A_Clipboard)
+        OutputDebug("")
+        return {
+            Text:A_Clipboard
+        }
     }
 }

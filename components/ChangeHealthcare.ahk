@@ -129,7 +129,10 @@ GetDateFromControlText(text)
     ; Remove spaces, sometimes erroneously detects a space character
     no_spaces:=StrReplace(text, " ", "")
 
-    result:=RegExMatch(no_spaces,date_regex,&date_result)
+    ;Change emdashes to simple dashes
+    monodash:=StrReplace(no_spaces,"—","-")
+
+    result:=RegExMatch(monodash,date_regex,&date_result)
 
     if(result>0)
     {
@@ -141,6 +144,8 @@ GetDateFromControlText(text)
         fields:=StrSplit(rawdateregex,"-")
         
         day:=ForceToNumbers(fields[1])
+        day:=LTrim(day,"0") ; Remove leading zeroes
+
         month:=ForceToKnownMonth(fields[2])
         year:=ForceToNumbers(fields[3])
 
@@ -169,7 +174,8 @@ GetPriorDate()
     control:=GetStudyOnRightControl()
     if(IsSet(control))
     {
-        ocr_result:=OCRSpecificControl(ChangePACS,control,CHANGE_DATE_OCR_OPTIONS)
+        ; ocr_result:=OCRSpecificControl(ChangePACS,control,CHANGE_DATE_OCR_OPTIONS)
+        ocr_result:=OCRSpecificControl_Capture2Text(ChangePACS,control)
         if(IsSet(ocr_result) AND ocr_result!="")
         {
             date:=GetDateFromControlText(ocr_result.Text)
@@ -177,6 +183,10 @@ GetPriorDate()
                 ocr_result:ocr_result,
                 date:date
             }
+        }
+        else
+        {
+            OutputDebug("No result.")
         }
     }
 }

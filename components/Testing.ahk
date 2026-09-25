@@ -2,6 +2,7 @@
 
 #Include Constants.ahk
 #Include GenericWindowFunctions.ahk
+#Include AutoIndicationAndPrior.ahk
 
 PowerscribeDirectReportAccess()
 {
@@ -51,6 +52,17 @@ Test(){
      ; Can get this working by running in VSCode with AHK++ either right click and run "Debug Configurations"
      ; or Ctrl+Alt+F9
      ; FuzzPowerscribe()
+
+    result:=GetPriorDate()
+    if(result)
+    {
+        OutputDebug("Text " result.ocr_result.Text)
+        OutputDebug("Date " result.date)
+    }
+    else
+    {
+        OutputDebug("No result")
+    }
     OutputDebug("Test complete!")
 }
 
