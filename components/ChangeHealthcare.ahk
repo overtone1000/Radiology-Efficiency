@@ -150,7 +150,7 @@ GetModalityFromControlText(text)
     }
     else
     {
-        MsgBox("No modality found in " text)
+        ;MsgBox("No modality found in " text)
     }
 }
 
