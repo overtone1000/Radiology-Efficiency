@@ -82,6 +82,14 @@ months:=
     "dec",
 ]
 
+modalities:=
+[
+    "CT",
+    "MR",
+    "PT",
+    "NM"
+]
+
 ForceToNumbers(str)
 {
     retval:=str
@@ -116,6 +124,34 @@ ForceToKnownMonth(str)
     }
 
     return str
+}
+
+GetModalityFromControlText(text)
+{
+    modality_regex:="(,)([A-Za-z]{2,4})(,)"
+
+    no_spaces:=StrReplace(text, " ", "")
+
+    result:=RegExMatch(no_spaces,modality_regex,&modality_result)
+
+    if(result>0)
+    {
+        found_modality:=modality_result[2]
+
+        for(modality in modalities)
+        {
+            if(found_modality==modality)
+            {
+                return found_modality
+            }
+        }
+
+        MsgBox("Unexpected modality " found_modality " found.")
+    }
+    else
+    {
+        MsgBox("No modality found in " text)
+    }
 }
 
 GetDateFromControlText(text)
@@ -179,9 +215,11 @@ GetPriorDate()
         if(IsSet(ocr_result) AND ocr_result!="")
         {
             date:=GetDateFromControlText(ocr_result.Text)
+            modality:=GetModalityFromControlText(ocr_result.Text)
             return {
                 ocr_result:ocr_result,
-                date:date
+                date:date,
+                modality:modality
             }
         }
         else

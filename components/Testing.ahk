@@ -58,6 +58,7 @@ Test(){
     {
         OutputDebug("Text " result.ocr_result.Text)
         OutputDebug("Date " result.date)
+        OutputDebug("Modality " result.modality)
     }
     else
     {

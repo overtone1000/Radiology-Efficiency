@@ -67,7 +67,14 @@ AutoIndicationAndPrior()
     res:=GetPriorDate() ;This causes powerscribe to lose focus
     if(IsSet(res) AND res!="" AND res.date!="")
     {
-        A_Clipboard:=res.date
+        if(res.modality!="")
+        {
+            A_Clipboard:=res.modality . " " . res.date
+        }
+        else
+        {
+            A_Clipboard:=res.date
+        }
     }
     else
     {
