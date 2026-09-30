@@ -40,7 +40,13 @@ CopyPriorDateIfExists()
     date_field_coords:="504 271"
     WinActivate(RadCalcDEXA)
     WinWaitActive(RadCalcDEXA)
-    if(IsSet(date) AND date!="" AND date.date_result!="")
+    if(IsSet(date) 
+        AND date!="" 
+        AND date.date_result!=""
+        AND date.date_result.month!=""
+        AND date.date_result.day!=""
+        AND date.date_result.year!=""
+    )
     {
         CoordMode("Mouse", "Client")
         Click(date_field_coords)
