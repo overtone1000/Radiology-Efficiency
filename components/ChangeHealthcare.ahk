@@ -159,6 +159,9 @@ GetModalityFromControlText(text)
 GetDateFromControlText(text)
 {
     datestring:=""
+    day:=""
+    month:=""
+    year:=""
 
     ; Regex
     ; Two chars, a dash, three chars, a dash, four chars
