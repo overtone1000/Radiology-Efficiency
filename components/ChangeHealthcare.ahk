@@ -87,7 +87,9 @@ modalities:=
     "CT",
     "MR",
     "PT",
-    "NM"
+    "NM",
+    "CR",
+    "DXA"
 ]
 
 ForceToNumbers(str)
@@ -156,7 +158,7 @@ GetModalityFromControlText(text)
 
 GetDateFromControlText(text)
 {
-    retval:=""
+    datestring:=""
 
     ; Regex
     ; Two chars, a dash, three chars, a dash, four chars
@@ -194,7 +196,7 @@ GetDateFromControlText(text)
             }
         }
 
-        retval:=month . "/" . day . "/" . year
+        datestring:=month . "/" . day . "/" . year
     }
     else
     {
@@ -202,6 +204,13 @@ GetDateFromControlText(text)
         ;MsgBox(no_spaces)
     }
     
+    retval := {
+        datestring:datestring,
+        month:month,
+        day:day,
+        year:year
+    }
+
     return retval
 }
 
@@ -218,7 +227,7 @@ GetPriorDate()
             modality:=GetModalityFromControlText(ocr_result.Text)
             return {
                 ocr_result:ocr_result,
-                date:date,
+                date_result:date,
                 modality:modality
             }
         }
