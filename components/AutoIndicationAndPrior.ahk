@@ -20,8 +20,12 @@ AutoIndicationAndPrior()
     Sleep(500)
     CopyFromActiveWindow()
 
-    histories:=StrSplit(A_Clipboard,"`n","`r")
     parsed_histories:=[]
+
+    
+    ; This way doesn't work because some histories are separated by lines.
+    /*
+    histories:=StrSplit(A_Clipboard,"`n","`r")
     for(item in histories)
     {
         parsed_history:=item
@@ -35,6 +39,17 @@ AutoIndicationAndPrior()
             parsed_histories.Push(parsed_history)
         }
     }
+    */
+
+    regex:="\*{(.*?)}\*"
+
+    while (i:=RegexMatch(test,regex,&res,start)){
+        parsed_histories.Push(res[1])
+        OutputDebug("   " res[1] " (" res.Len ")")
+        start:=i+res.Len
+        OutputDebug("Start is now " start)
+    }
+
     
     if(parsed_histories.length>0)
     {

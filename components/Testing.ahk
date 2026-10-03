@@ -49,27 +49,21 @@ FuzzPowerscribe()
 
 Test(){
     OutputDebug("Starting test.")
-     ; Can get this working by running in VSCode with AHK++ either right click and run "Debug Configurations"
-     ; or Ctrl+Alt+F9
-     ; FuzzPowerscribe()
+   
+    test:="1.*{Hx one}*2.*{Hx 2}*3.*{Hx3}*4.*{Hx4}*5.*{Hx5}*"
 
-    result:=GetPriorDate()
-    if(result)
-    {
-        OutputDebug("Text " result.ocr_result.Text)
-        OutputDebug("Date " result.date)
-        OutputDebug("Modality " result.modality)
+    results:=[]
+
+    regex:="\*{(.*?)}\*"
+    
+    while (i:=RegexMatch(test,regex,&res,start)){
+        results.Push(res[1])
+        OutputDebug("   " res[1] " (" res.Len ")")
+        start:=i+res.Len
+        OutputDebug("Start is now " start)
     }
-    else
-    {
-        OutputDebug("No result")
-    }
+
     OutputDebug("Test complete!")
 }
 
-^+!Space::
-{
-     ; Can get this working by running in VSCode with AHK++ either right click and run "Debug Configurations"
-     ; or Ctrl+Alt+F9
-    Test()
-}
+Test()
