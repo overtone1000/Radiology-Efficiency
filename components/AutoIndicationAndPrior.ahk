@@ -42,8 +42,9 @@ AutoIndicationAndPrior()
     */
 
     regex:="\*{(.*?)}\*"
-
-    while (i:=RegexMatch(test,regex,&res,start)){
+    start:=1
+    
+    while (i:=RegexMatch(A_Clipboard,regex,&res,start)){
         parsed_histories.Push(res[1])
         OutputDebug("   " res[1] " (" res.Len ")")
         start:=i+res.Len
