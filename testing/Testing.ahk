@@ -66,4 +66,4 @@ Test(){
     OutputDebug("Test complete!")
 }
 
-; Test()
+Test()
