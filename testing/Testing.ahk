@@ -1,8 +1,8 @@
 #Requires AutoHotkey v2.0
 
-#Include Constants.ahk
-#Include GenericWindowFunctions.ahk
-#Include AutoIndicationAndPrior.ahk
+#Include ../components/Constants.ahk
+#Include ../components/GenericWindowFunctions.ahk
+#Include ../components/AutoIndicationAndPrior.ahk
 
 PowerscribeDirectReportAccess()
 {
@@ -66,4 +66,4 @@ Test(){
     OutputDebug("Test complete!")
 }
 
-Test()
+; Test()

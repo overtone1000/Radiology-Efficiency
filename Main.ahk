@@ -7,7 +7,6 @@
 #Include components/AAo.ahk
 #Include components/AutoIndicationAndPrior.ahk
 #Include components/Misc.ahk
-#Include components/Testing.ahk
 
 ; 0 - Copy everything from powerscribe into browser
 ^+0::
