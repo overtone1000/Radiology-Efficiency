@@ -11,7 +11,14 @@ ActivateIfExistsAndNotActive(window, wait:=true, timeout:=unset)
             WinActivate(window)
             if(wait)
             {
-                return WinWaitActive(window,,timeout)
+                if(IsSet(timeout))
+                {
+                    return WinWaitActive(window,,timeout)
+                }
+                else
+                {
+                    return WinWaitActive(window)
+                }
             }
             else
             {
