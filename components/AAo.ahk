@@ -234,7 +234,7 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
 
         if(data.is_male == data.is_female)
         {
-            MsgBox("Couldn't determine sex.")
+            OutputDebug("Couldn't determine sex.")
         }
         else
         {
