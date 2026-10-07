@@ -7,6 +7,8 @@
 
 AutoIndicationAndPrior()
 {
+    date_function_result:=GetPriorDate() ;This causes powerscribe to lose focus, so do it first thing.
+
     if Activate_And_Wait(Powerscribe,2)==0 
     {
         return
@@ -44,10 +46,10 @@ AutoIndicationAndPrior()
     regex:="\*{(.*?)}\*"
     start:=1
     
-    while (i:=RegexMatch(A_Clipboard,regex,&res,start)){
-        parsed_histories.Push(res[1])
-        OutputDebug("   " res[1] " (" res.Len ")")
-        start:=i+res.Len
+    while (i:=RegexMatch(A_Clipboard,regex,&history_result,start)){
+        parsed_histories.Push(history_result[1])
+        OutputDebug("   " history_result[1] " (" history_result.Len ")")
+        start:=i+history_result.Len
         OutputDebug("Start is now " start)
     }
 
@@ -80,31 +82,27 @@ AutoIndicationAndPrior()
     Send("{Tab}")
     Sleep(500)
 
-    res:=GetPriorDate() ;This causes powerscribe to lose focus
-    if(IsSet(res) AND res!="" AND res.date_result!="" AND res.date_result.datestring!="")
+    if(IsSet(date_function_result) AND date_function_result!="" AND date_function_result.date_result!="" AND date_function_result.date_result.datestring!="")
     {
-        if(res.modality!="")
+        if(date_function_result.modality!="")
         {
-            A_Clipboard:=res.modality . " " . res.date_result.datestring
+            A_Clipboard:=date_function_result.modality . " " . date_function_result.date_result.datestring
         }
         else
         {
-            A_Clipboard:=res.date_result.datestring
+            A_Clipboard:=date_function_result.date_result.datestring
         }
     }
     else
     {
         A_Clipboard:="None"
     }
-    if Activate_And_Wait(Powerscribe,2)==0 
-    {
-        return
-    }
+    
     PasteToActiveWindow()
     
     Sleep(1000) ; Can sleep for a long time here, the rest is just for debugging
-    if(IsSet(res) AND res!="" AND res.ocr_result!="")
+    if(IsSet(date_function_result) AND date_function_result!="" AND date_function_result.ocr_result!="")
     {
-        A_Clipboard:=res.ocr_result.Text
+        A_Clipboard:=date_function_result.ocr_result.Text
     }
 }
