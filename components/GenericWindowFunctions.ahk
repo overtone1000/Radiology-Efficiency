@@ -2,7 +2,7 @@
 
 #Include GenericWindowFunctions.ahk
 
-ActivateIfExistsAndNotActive(window, wait:=true, timeout:="")
+ActivateIfExistsAndNotActive(window, wait:=true, timeout:=unset)
 {
     if(WinExist(window))
     {

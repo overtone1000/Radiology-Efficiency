@@ -196,7 +196,7 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
     monitor_index:=0
     monitor:=GetMonitorCoords(monitor_index)
       
-    ActivateIfExistsAndNotActive(Epic,true)
+    ActivateIfExistsAndNotActive(Epic)
     WinMove(monitor.x_half,monitor.top,monitor.x_half,monitor.bottom,Epic)
     Sleep(200)
 
@@ -248,7 +248,7 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
         
         id:="ahk_id " . WinWait(RadCalcAAo)
 
-        ActivateIfExistsAndNotActive(id,true,)
+        ActivateIfExistsAndNotActive(id)
         
         WinMove(0,monitor.top,monitor.x_half,monitor.bottom,id)
 
