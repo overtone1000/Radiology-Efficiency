@@ -84,7 +84,7 @@ GetEpicData()
 
         if(weight_index==0)
         {
-            MsgBox("Couldn't get weight.")
+            OutputDebug("Couldn't get weight.")
         }
         else
         {
@@ -93,7 +93,7 @@ GetEpicData()
 
         if(height_cm_index==0 && height_m_index==0)
         {
-            MsgBox("Couldn't get height.")
+            OutputDebug("Couldn't get height.")
         }
         else
         {
@@ -109,7 +109,7 @@ GetEpicData()
         
         if(age_index==0)
         {
-            MsgBox("Couldn't get age.")
+            OutputDebug("Couldn't get age.")
         }
         else
         {
@@ -157,7 +157,7 @@ EnterInfoIntoRadcalc(data)
 
     if(data.is_male == data.is_female)
     {
-        MsgBox("Couldn't determine sex.")
+        OutputDebug("Couldn't determine sex.")
     }
     else
     {
