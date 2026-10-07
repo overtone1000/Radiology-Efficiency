@@ -8,8 +8,7 @@ CopyFromPowerscribeToRadcalcDEXA()
 {
     if(WinExist(RadCalcDEXA))
     {
-        WinActivate(Powerscribe)
-        WinWaitActive(PowerScribe)
+        ActivateIfExistsAndNotActive(Powerscribe)
         Send("^a")
         Sleep(200) ; Make sure selection happens
         Send("^x")
@@ -17,8 +16,7 @@ CopyFromPowerscribeToRadcalcDEXA()
         WinMinimize(Powerscribe)
         Sleep(200)
         
-        WinActivate(RadCalcDEXA)
-        WinWaitActive(RadCalcDEXA)
+        ActivateIfExistsAndNotActive(RadCalcDEXA)
 
         CoordMode("Mouse", "Client")
         Click(radcalc_ingest_button)
@@ -38,8 +36,7 @@ CopyPriorDateIfExists()
     date:=GetPriorDate()
     A_Clipboard:=""
     date_field_coords:="504 271"
-    WinActivate(RadCalcDEXA)
-    WinWaitActive(RadCalcDEXA)
+    ActivateIfExistsAndNotActive(RadCalcDEXA)
     if(IsSet(date) 
         AND date!="" 
         AND date.date_result!=""
@@ -76,8 +73,7 @@ CopyFromRadcalcDEXAToPowerscribeAndSignReport()
         {
             if WinActive(RadCalcDEXA)
             {
-                WinActivate(Powerscribe)
-                WinWaitActive(PowerScribe)
+                ActivateIfExistsAndNotActive(Powerscribe)
                 Send("^a")
                 PasteToActiveWindow()
                 Send("^{Home}") ; To beginning of report

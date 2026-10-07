@@ -5,8 +5,7 @@
 
 GetStudyOnRightControl()
 {
-    WinActivate(ChangePACS)
-    WinWaitActive(ChangePACS)
+    ActivateIfExistsAndNotActive(ChangePACS)
     
     control1:="AliTbCntrlStudyDetails1"
     control2:="AliTbCntrlStudyDetails2"

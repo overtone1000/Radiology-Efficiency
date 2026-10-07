@@ -723,8 +723,7 @@ class OCR {
                     else if this.Relative.CoordMode = "Client"
                         mode := "Client", hwnd := this.Relative.Hwnd
                     if IsSet(hwnd) && !WinActive(hwnd) {
-                        WinActivate(hwnd)
-                        WinWaitActive(hwnd,,1)
+                        ActivateIfExistsAndNotActive(hwnd,true,1)
                     }
                 }
                 x += this.Relative.HasProp("x") ? this.Relative.x : 0

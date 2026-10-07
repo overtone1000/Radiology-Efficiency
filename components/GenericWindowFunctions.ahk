@@ -2,12 +2,22 @@
 
 #Include GenericWindowFunctions.ahk
 
-Activate_And_Wait(window, timeout)
+ActivateIfExistsAndNotActive(window, wait:=true, timeout:="")
 {
     if(WinExist(window))
     {
-        WinActivate(window)
-        return WinWaitActive(window,,timeout)
+        if(not WinActive(window))
+        {
+            WinActivate(window)
+            if(wait)
+            {
+                return WinWaitActive(window,,timeout)
+            }
+            else
+            {
+                return WinGetID(window)
+            }
+        }
     }
     else
     {
@@ -15,29 +25,34 @@ Activate_And_Wait(window, timeout)
     }
 }
 
+Activate_And_Wait(window, timeout)
+{
+    return ActivateIfExistsAndNotActive(window,true,timeout)
+}
+
 Activate_Run_Return(window,bound_function,delay:="")
 {
-    current := WinActive("A")
-    
-    if window==current
+    if(WinExist(window))
     {
-        bound_function()
-    }
-    else
-    {
-        WinActivate(window)
-        WinWaitActive(window)
-        ; Sleep delay ; Not needed
-        bound_function()
-        if delay
+        current := WinActive("A")
+        
+        if window==current
         {
-            Sleep delay ; Definitely needed for dictation toggle!
+            bound_function()
         }
-        WinActivate(current)
-        ; No need to wait for activation
+        else
+        {
+            WinActivate(window)
+            WinWaitActive(window)
+            ; Sleep delay ; Not needed
+            bound_function()
+            if delay
+            {
+                Sleep delay ; Definitely needed for dictation toggle!
+            }
+            WinActivate(current)
+        }
     }
-
-    Return
 }
 
 Activate_Send_Return(window,message,delay:="")
@@ -104,18 +119,9 @@ ToggleVisibility(window,maximize)
         Pushes window down if it's active.
         Send Down twice in case the window is maximized
     */
-    if WinActive(window)
+
+    if ActivateIfExistsAndNotActive(window,true,)!=0
     {
-         ;SendActiveWindowDown() ;maybe phase this out, doesn't work as reliably as WinMinimize
-         WinMinimize(window)
+        WinMinimize(window)
     }
-    else
-    {
-        WinActivate(window)
-        if maximize
-        {
-            WinMaximize(window)
-        }
-    }
-    Return
 }

@@ -196,8 +196,7 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
     monitor_index:=0
     monitor:=GetMonitorCoords(monitor_index)
       
-    WinActivate(Epic)
-    WinWaitActive(Epic)
+    ActivateIfExistsAndNotActive(Epic,true)
     WinMove(monitor.x_half,monitor.top,monitor.x_half,monitor.bottom,Epic)
     Sleep(200)
 
@@ -205,13 +204,8 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
 
     if(data)
     {
-        if WinExist(MSEdge)
-        {
-            WinActivate(MSEdge)
-            WinWaitActive(MSEdge)
-            Send("^0")
-        }
-
+        Activate_Send_Return(MSEdge,"^0","")
+        
         url:="https://radcalc.overdesigned.org/AscendingAorticDiameter?"
 
         append_url(key,value)
@@ -253,9 +247,9 @@ CopyInfoFromEpicIntoRadcalcAAoAndCalculate()
         ;pid:="ahk_pid " . OutputPID ; This does not work unfortunately
         
         id:="ahk_id " . WinWait(RadCalcAAo)
-        WinActivate(id)
-        WinWaitActive(id)
 
+        ActivateIfExistsAndNotActive(id,true,)
+        
         WinMove(0,monitor.top,monitor.x_half,monitor.bottom,id)
 
         ; Old way, use GET parameters instead

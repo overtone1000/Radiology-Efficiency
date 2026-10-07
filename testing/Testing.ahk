@@ -52,24 +52,29 @@ TimeTest()
     start := A_TickCount
     iterations:=20
 
+    WinActivate(PowerScribe)
+
     n:=0
     loop{
         OutputDebug(n)
-        WinActivate(Powerscribe)
-        WinWaitActive(PowerScribe)
+        WinActivate(PowerScribe)
         n:=n+1
     }until n>=iterations-1
 
     end:= A_TickCount
     time:= (end-start)/iterations
 
-    OutputDebug("Winactivate + wait takes " time " ms.")
+    OutputDebug("Each go takes " time " ms.")
+
+    ;Winactivate is about 110 ms
+    ;winwaitactive is about 110 ms
+    ;winactive is like 6! Implement wrapper functions to speed things up!
 }
 
 Test(){
     OutputDebug("Starting test.")
    
-    
+    TimeTest()
     
     OutputDebug("Test complete!")
 }
