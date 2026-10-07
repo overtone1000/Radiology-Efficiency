@@ -52,12 +52,11 @@ TimeTest()
     start := A_TickCount
     iterations:=20
 
-    WinActivate(PowerScribe)
 
     n:=0
     loop{
         OutputDebug(n)
-        WinActivate(PowerScribe)
+        WinWaitActive("A")
         n:=n+1
     }until n>=iterations-1
 
@@ -67,14 +66,29 @@ TimeTest()
     OutputDebug("Each go takes " time " ms.")
 
     ;Winactivate is about 110 ms
-    ;winwaitactive is about 110 ms
+    ;winwaitactive is about 110 ms too, just by itself!
     ;winactive is like 6! Implement wrapper functions to speed things up!
+}
+
+PowerscribeControlsend()
+{
+    ;This is blazing fast when dictation is off. This is very slow when it's on.
+    ;The control name probably changes.
+
+    ControlSend("{Tab}","WindowsForms10.RICHEDIT50W.app.0.3106ca3_r8_ad11",PowerScribe) ;Does not work
+    Sleep(10)
+    ControlSend("{Tab}","WindowsForms10.RICHEDIT50W.app.0.3106ca3_r8_ad11",PowerScribe) ;Does not work
+    Sleep(10)
+    ControlSend("{Tab}","WindowsForms10.RICHEDIT50W.app.0.3106ca3_r8_ad11",PowerScribe) ;Does not work
+    Sleep(10)
+    ControlSend("{Tab}","WindowsForms10.RICHEDIT50W.app.0.3106ca3_r8_ad11",PowerScribe) ;Does not work
+    Sleep(10)
 }
 
 Test(){
     OutputDebug("Starting test.")
-   
-    TimeTest()
+    
+    
     
     OutputDebug("Test complete!")
 }
