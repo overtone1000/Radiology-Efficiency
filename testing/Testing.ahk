@@ -47,22 +47,30 @@ FuzzPowerscribe()
     }
 }
 
+TimeTest()
+{
+    start := A_TickCount
+    iterations:=20
+
+    n:=0
+    loop{
+        OutputDebug(n)
+        WinActivate(Powerscribe)
+        WinWaitActive(PowerScribe)
+        n:=n+1
+    }until n>=iterations-1
+
+    end:= A_TickCount
+    time:= (end-start)/iterations
+
+    OutputDebug("Winactivate + wait takes " time " ms.")
+}
+
 Test(){
     OutputDebug("Starting test.")
    
-    test:="1.*{Hx one}*2.*{Hx 2}*3.*{Hx3}*4.*{Hx4}*5.*{Hx5}*"
-
-    results:=[]
-
-    regex:="\*{(.*?)}\*"
     
-    while (i:=RegexMatch(test,regex,&res,start)){
-        results.Push(res[1])
-        OutputDebug("   " res[1] " (" res.Len ")")
-        start:=i+res.Len
-        OutputDebug("Start is now " start)
-    }
-
+    
     OutputDebug("Test complete!")
 }
 
