@@ -40,15 +40,14 @@ Activate_And_Wait(window, timeout)
 Activate_Run_Return(window,bound_function,delay:="")
 {
     if(WinExist(window))
-    {
-        current := WinActive("A")
-        
-        if window==current
+    {        
+        if WinActive(window)
         {
             bound_function()
         }
         else
         {
+            current := WinActive("A")
             WinActivate(window)
             WinWaitActive(window)
             ; Sleep delay ; Not needed
