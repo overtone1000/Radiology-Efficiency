@@ -126,8 +126,15 @@ ToggleVisibility(window,maximize)
         Send Down twice in case the window is maximized
     */
 
-    if ActivateIfExistsAndNotActive(window,true,)!=0
+    if(WinExist(window))
     {
-        WinMinimize(window)
+        if(WinActive(window))
+        {
+            WinMinimize(window)
+        }
+        else
+        {
+            WinActivate(window)     
+        }
     }
 }
