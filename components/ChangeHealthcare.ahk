@@ -88,7 +88,8 @@ modalities:=
     "PT",
     "NM",
     "CR",
-    "DXA"
+    "DXA",
+    "US"
 ]
 
 ForceToNumbers(str)
