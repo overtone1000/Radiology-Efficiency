@@ -14,16 +14,24 @@ CopyFromPowerscribeToRadcalcDEXA()
         Send("^x")
         Sleep(200) ; Make sure full cut happens
         WinMinimize(Powerscribe)
-        Sleep(200)
         
-        ActivateIfExistsAndNotActive(RadCalcDEXA)
+        ;Sleep(200) ;Necessary?
+        
+        if A_Clipboard == ""
+        {
+            MsgBox("Clipboard is empty! RadCalc DEXA copy aborting.")
+        }
+        else
+        {
+            ActivateIfExistsAndNotActive(RadCalcDEXA)
 
-        CoordMode("Mouse", "Client")
-        Click(radcalc_ingest_button)
-        Sleep(100)
-        A_Clipboard := "" ; Clear the clipboard to avoid problems!
+            CoordMode("Mouse", "Client")
+            Click(radcalc_ingest_button)
+            Sleep(100)
+            A_Clipboard := "" ; Clear the clipboard to avoid problems!
 
-        CopyPriorDateIfExists()
+            CopyPriorDateIfExists()
+        }
     }
     else
     {
