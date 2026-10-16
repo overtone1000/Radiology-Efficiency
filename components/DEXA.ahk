@@ -15,7 +15,7 @@ CopyFromPowerscribeToRadcalcDEXA()
         Sleep(200) ; Make sure full cut happens
         WinMinimize(Powerscribe)
         
-        ;Sleep(200) ;Necessary?
+        Sleep(200) ;Necessary? Yes, copy seems to fail
         
         if A_Clipboard == ""
         {
