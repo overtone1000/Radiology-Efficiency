@@ -37,7 +37,19 @@ GetEpicData()
     Sleep(1000)
     Loop {
         OutputDebug("Trying to get Epic data. " . A_Index)
-        MouseMove(epic_field_bottom[1],epic_field_bottom[2],0)
+        
+        if(Mod(A_Index,2)>=0)
+        {
+            click1:=epic_field_bottom
+            click2:=epic_field_top
+        }
+        else
+        {
+            click1:=epic_field_top  
+            click2:=epic_field_bottom
+        }
+
+        MouseMove(click1[1],click1[2],0)
         Sleep(-1)
         Send("{Wheeldown 10}")
         ;Send("{LButton Down}")
@@ -46,7 +58,7 @@ GetEpicData()
         ;Sleep(-1)
         Send("{LButton Down}")
         ;Sleep(-1)
-        MouseMove(epic_field_top[1],epic_field_top[2],0)
+        MouseMove(click2[1],click2[2],0)
         Sleep(-1)
         Send("{LButton Up}")
         ;Sleep(-1)
@@ -54,7 +66,9 @@ GetEpicData()
         CopyFromActiveWindow(0.5)
         Click(epic_field_bottom[1],epic_field_bottom[2])
         ; OutputDebug("Finished " . A_Clipboard . " " . A_Index)
-    } Until A_Clipboard!="" Or A_Index==3
+
+        Sleep(100)
+    } Until A_Clipboard!="" Or A_Index==5
     
     ; OutputDebug("Done, clipboard is " . A_Clipboard)
 

@@ -1,7 +1,7 @@
 #Requires AutoHotkey v2.0
 
-global PowerScribe := "PowerScribe"
-global Epic := "Hyperspace"
+global PowerScribe := "Nuance PowerScribe One ahk_exe Nuance.PowerScribeOne.exe"
+global Epic := "Hyperspace ahk_exe Hyperdrive.exe"
 ;global RadCalc := "RadCalc"
 global RadCalcAAo := "RadCalc-AAo"
 global RadCalcDEXA := "RadCalc-DEXA"
@@ -9,7 +9,7 @@ global Intellispace := "Philips IntelliSpace Portal"
 global MSEdge := "Edge"
 global radcalc_ingest_button := "543 128"
 global max_button := "46 1064"
-global ChangePACS := "Change Healthcare Radiology Solutions Radiology Station"
+global ChangePACS := "Change Healthcare Radiology Solutions Radiology Station ahk_class Emerald ImageViewer ahk_exe AliHRS64.exe"
 ; global Capture2Text := "..\Applications\Capture2Text\Capture2Text_CLI.exe"
 global Capture2Text_Directory := "C:\Users\B909907\OneDrive - Kaiser Permanente\@Tyler\Efficiency\Applications\Capture2Text"
 global Capture2Text_Executable := "Capture2Text_CLI.exe"
