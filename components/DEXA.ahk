@@ -71,7 +71,8 @@ GetFormattedPriorDateIfExists()
         {
             month:=date.date_result.month
         }
-                
+        
+        day:=""
         if(date.date_result.day<10){
             day:="0" . date.date_result.day
         }
@@ -81,7 +82,8 @@ GetFormattedPriorDateIfExists()
         }
         
         
-        retval:= date.date_result.year "-" month "-" day
+        ;retval:= date.date_result.year "-" month "-" day
+        retval:= month "/" day "/" date.date_result.year
 
         OutputDebug("Returning " retval)
     }
