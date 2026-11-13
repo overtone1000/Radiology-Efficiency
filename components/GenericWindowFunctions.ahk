@@ -1,6 +1,6 @@
 #Requires AutoHotkey v2.0
 
-#Include GenericWindowFunctions.ahk
+SendMode("Input") ;This is the default and is optimal. Previously used "Event" and suffered performance degradation.
 
 ActivateIfExistsAndNotActive(window, wait:=true, timeout:=unset)
 {
