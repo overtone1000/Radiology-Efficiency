@@ -43,7 +43,8 @@ AutoIndicationAndPrior()
     }
     */
 
-    regex:="\*{(.*?)}\*"
+    ;regex:="\*{(.*?)}\*"
+    regex:="\*{([^}]*)}\*"
     start:=1
     
     while (i:=RegexMatch(A_Clipboard,regex,&history_result,start)){
@@ -59,12 +60,16 @@ AutoIndicationAndPrior()
         selected_history:=""
         if(parsed_histories.length==1)
         {
+            OutputDebug("Single history found.")
+            OutputDebug(parsed_histories[1])
             selected_history:=parsed_histories[1]
         }
         else
         {
+            OutputDebug("Multiple histories found.")
             for(parsed_history in parsed_histories)
             {
+                OutputDebug(parsed_history)
                 if(StrLen(selected_history)<StrLen(parsed_history))
                 {
                     selected_history:=parsed_history
