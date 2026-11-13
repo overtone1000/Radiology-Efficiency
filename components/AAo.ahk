@@ -18,7 +18,6 @@ male_regex:="Male"
 GetEpicData()
 {
     CoordMode("Mouse", "Client")
-    SendMode("Event")
     
     ;This would search for vitals but wasn't reliable.
     ;Send("^{Space}")

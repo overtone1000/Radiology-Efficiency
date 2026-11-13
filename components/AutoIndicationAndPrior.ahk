@@ -80,7 +80,7 @@ AutoIndicationAndPrior()
     ;No need to sleep here. PasteToActiveWindow handles its own sleep.
     ;Sleep(500)
     Send("{Tab}")
-    Sleep(500)
+    Sleep(750) ;This needs to be more than 500. Too frequently the tab doesn't complete.
 
     if(IsSet(date_function_result) AND date_function_result!="" AND date_function_result.date_result!="" AND date_function_result.date_result.datestring!="")
     {
