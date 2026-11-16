@@ -39,11 +39,13 @@ GetEpicData()
         
         if(Mod(A_Index,2)>=0)
         {
+            OutputDebug("Clicking forward.")
             click1:=epic_field_bottom
             click2:=epic_field_top
         }
         else
         {
+            OutputDebug("Clicking backward.")
             click1:=epic_field_top  
             click2:=epic_field_bottom
         }
@@ -63,7 +65,7 @@ GetEpicData()
         ;Sleep(-1)
         ; OutputDebug("Trying to copy.")
         CopyFromActiveWindow(0.5)
-        Click(epic_field_bottom[1],epic_field_bottom[2])
+        Click(click1[1],click1[2])
         ; OutputDebug("Finished " . A_Clipboard . " " . A_Index)
 
         Sleep(100)
