@@ -139,7 +139,7 @@ GetModalityFromControlText(text)
 
     if(result>0)
     {
-        found_modality:=modality_result[2]
+        found_modality:=StrUpper(modality_result[2])
 
         for(modality in modalities)
         {
