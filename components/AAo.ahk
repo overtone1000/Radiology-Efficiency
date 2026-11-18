@@ -7,7 +7,7 @@
 epic_profile:=[58,87]
 epic_field_bottom:=[150,1105]
 epic_field_top:=[2,133]
-epic_field_top2:=[20,200]
+epic_field_top2:=[20,162]
 
 weight_regex:="\((.*?)kg\)"
 height_regex_m:="\((.*?)m\)"
