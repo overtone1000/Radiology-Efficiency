@@ -7,6 +7,7 @@
 epic_profile:=[58,87]
 epic_field_bottom:=[150,1105]
 epic_field_top:=[2,133]
+epic_field_top2:=[20,200]
 
 weight_regex:="\((.*?)kg\)"
 height_regex_m:="\((.*?)m\)"
@@ -37,17 +38,27 @@ GetEpicData()
     Loop {
         OutputDebug("Trying to get Epic data. " . A_Index)
         
-        if(Mod(A_Index,2)>=0)
+        modulo:=Mod(A_Index,4)
+        OutputDebug("Clicking modulo " modulo)
+        if(modulo==0)
         {
-            OutputDebug("Clicking forward.")
             click1:=epic_field_bottom
             click2:=epic_field_top
         }
-        else
+        else if(modulo==1)
         {
-            OutputDebug("Clicking backward.")
             click1:=epic_field_top  
             click2:=epic_field_bottom
+        }
+        else if(modulo==2)
+        {
+            click1:=epic_field_top2  
+            click2:=epic_field_bottom
+        }
+        else if(modulo==2)
+        {
+            click1:=epic_field_bottom
+            click2:=epic_field_top2  
         }
 
         MouseMove(click1[1],click1[2],0)
@@ -68,8 +79,8 @@ GetEpicData()
         Click(click1[1],click1[2])
         ; OutputDebug("Finished " . A_Clipboard . " " . A_Index)
 
-        Sleep(100)
-    } Until A_Clipboard!="" Or A_Index==5
+        Sleep(250)
+    } Until A_Clipboard!="" Or A_Index==10
     
     ; OutputDebug("Done, clipboard is " . A_Clipboard)
 
