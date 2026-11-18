@@ -117,6 +117,12 @@
     Activate_Click_Return(Intellispace, max_button, 10, true)
 }
 
+; Ctrl+Shift+R for intellispace roi button 
+^+R::
+{
+    Activate_Click_Return(Intellispace, max_button_large_monitor, 10, true)
+}
+
 ; Enter
 ^+Enter::
 {
